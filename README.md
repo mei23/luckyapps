@@ -1,0 +1,2 @@
+# luckyapps
+WebApp for mastodon
