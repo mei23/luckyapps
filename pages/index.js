@@ -6,14 +6,13 @@ import List from 'react-md/lib/Lists/List'
 import Subheader from 'react-md/lib/Subheaders'
 import Paper from 'react-md/lib/Papers'
 import Switch from 'react-md/lib/SelectionControls/Switch'
-import Button from 'react-md/lib/Buttons/Button'
-import Collapse from 'react-md/lib/Helpers/Collapse'
 
 import AccountSmall from '../components/AccountSmall'
 import Layout from '../components/Layout'
 import Status from '../components/Status'
 
 import LoggedInComponent from '../components/LoggedInComponent'
+import Credits from '../components/Credits'
 
 class Index extends LoggedInComponent {
   constructor(props) {
@@ -120,34 +119,6 @@ class Index extends LoggedInComponent {
         ))}
       </Layout>
     )
-  }
-}
-
-class Credits extends React.PureComponent {
-  constructor(props) {
-    super(props)
-
-    this.state = { collapsed: true }
-    this._toggleCollapse = this._toggleCollapse.bind(this)
-  }
-
-  _toggleCollapse() {
-    this.setState({ collapsed: !this.state.collapsed })
-  }
-
-  render() {
-    return (
-      <div>
-        <Button raised label='クレジット情報' onClick={this._toggleCollapse} style={{ marginBottom: 16 }} />
-        <Collapse collapsed={this.state.collapsed}>
-          <ul>
-            <li>開発: <a href='https://mstdn.jp/@the_boss'>@the_boss@mstdn.jp</a> (問題のご報告はこちらへ)</li>
-            <li>ライブラリ提供: <a href='https://mstdn.jp/@tobikame'>@tobikame@mstdn.jp</a></li>
-            <li>サウンド素材: <a href='http://taira-komori.jpn.org/'>無料効果音で遊ぼう！</a></li>
-          </ul>
-        </Collapse>
-      </div>
-    );
   }
 }
 
