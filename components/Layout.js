@@ -25,7 +25,11 @@ const Layout = (props) => (
   <div style={layoutStyle}>
     <Header children={props.children} />
 
-    <Head><title>{props.title || 'LuckyApps'}</title></Head>
+    <Head>
+      <title>
+        {props.title ? props.title + ' | LuckyApps' : 'LuckyApps'}
+      </title>
+    </Head>
 
     <h1>{props.title}</h1>
 
