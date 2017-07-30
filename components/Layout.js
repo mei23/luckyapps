@@ -3,16 +3,16 @@ import Head from 'next/head'
 import Button from 'react-md/lib/Buttons/Button'
 
 const Header = (props) => {
-    return (
-        <div>
-            <Head>
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel='stylesheet' href='/static/react-md.light_blue-yellow.min.css' />
-                <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500' />
-                <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Material+Icons' />
-            </Head>
-        </div>
-    )
+  return (
+    <div>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel='stylesheet' href='/static/react-md.light_blue-yellow.min.css' />
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500' />
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Material+Icons' />
+      </Head>
+    </div>
+  )
 }
 
 const layoutStyle = {
