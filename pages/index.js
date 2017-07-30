@@ -6,6 +6,8 @@ import List from 'react-md/lib/Lists/List'
 import Subheader from 'react-md/lib/Subheaders'
 import Paper from 'react-md/lib/Papers'
 import Switch from 'react-md/lib/SelectionControls/Switch'
+import TextField from 'react-md/lib/TextFields'
+import Button from 'react-md/lib/Buttons/Button'
 
 import AccountSmall from '../components/AccountSmall'
 import Layout from '../components/Layout'
@@ -13,6 +15,8 @@ import Status from '../components/Status'
 
 import LoggedInComponent from '../components/LoggedInComponent'
 import Credits from '../components/Credits'
+
+const DEFAULT_MUTE_TARGET_REGEX = '^(sync\\.twi2mstdn\\.space)$'
 
 class Index extends LoggedInComponent {
   constructor(props) {
@@ -23,11 +27,15 @@ class Index extends LoggedInComponent {
     state.toots = []
     state.muteMode = false
     state.mutedCount = 0
+    state.muteTargetRegex = DEFAULT_MUTE_TARGET_REGEX
+    state.muteTargetRegexChanged = DEFAULT_MUTE_TARGET_REGEX
     this.state = state
 
     if (!this.state.isLoggedIn) return
 
     this.toggleMuteMode = this.toggleMuteMode.bind(this)
+    this.handleRegexChange = this.handleRegexChange.bind(this)
+    this.handleRegexApply = this.handleRegexApply.bind(this)
   }
 
   static getInitialProps(ctx) {
@@ -51,7 +59,7 @@ class Index extends LoggedInComponent {
 
         const toot = {
           status,
-          isMuteTarget: appName === 'sync.twi2mstdn.space',
+          isMuteTarget: appName.match(this.state.muteTargetRegex),
           muted: false,
         }
 
@@ -75,6 +83,14 @@ class Index extends LoggedInComponent {
 
   toggleMuteMode(isEnabled) {
     this.setState({ muteMode: isEnabled })
+  }
+
+  handleRegexChange(e) {
+    this.setState({ muteTargetRegexChanged: e })
+  }
+
+  handleRegexApply(e) {
+    this.setState({ muteTargetRegex: this.state.muteTargetRegexChanged })
   }
 
   renderChild(props) {
@@ -104,8 +120,24 @@ class Index extends LoggedInComponent {
             id='muteMode'
             label='鳥を燃やすモード'
             name='muteMode'
-            className='md-cell'
+            className='md-cell md-cell--6'
             onChange={this.toggleMuteMode}
+          />
+        </div>
+        <div className='md-grid'>
+          <TextField
+            id='muteTargetRegex'
+            label='ミュート対象クライアント (正規表現)'
+            placeholder={DEFAULT_MUTE_TARGET_REGEX}
+            size={10}
+            className='md-cell '
+            defaultValue={DEFAULT_MUTE_TARGET_REGEX}
+            onChange={this.handleRegexChange}
+          />
+          <Button raised primary
+            label='適用'
+            className='md-cell md-cell--middle'
+            onClick={this.handleRegexApply}
           />
         </div>
 
