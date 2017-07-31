@@ -14,17 +14,20 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/luckyapps', {
 })
 
 const config = require('./config')
-const mastodonSecret = require('./mastodonSecret')
 
 const mastodonAuth = require('./api/mastodonAuth')
 
 const U = require('./api/utils/apiUtils')
 
+/* verify heroku config var */
+if (!dev && !process.env.SESSION_SECRET)
+  throw new Error('process.env.SESSION_SECRET does not specified')
+
 app.prepare().then(() => {
   const server = express()
 
   server.use(session({
-    secret: mastodonSecret.sessionSecret,
+    secret: dev ? 'session_secret_local' : process.env.SESSION_SECRET,
     saveUninitialized: true,
     store: new MongoStore({ mongooseConnection: mongoose.connection }),
     resave: false,
