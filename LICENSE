@@ -19,3 +19,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+特記事項
+
+以下のファイルは上記ライセンスが適用されません。
+
+/static/mastodon-api.min.js
+ライセンス: 不明, 作者: @onsen-ui
+
+/static/powerdown07_pitchup.mp3
+ライセンス: http://taira-komori.jpn.org/welcome.html , 作者: 小森　平
