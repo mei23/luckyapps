@@ -16,9 +16,9 @@ const StatusHeader = (props) => {
       </span>
       <span className='md-cell md-cell--6 md-cell--5-tablet md-cell--3-phone md-cell--right md-text--secondary'
         style={{ textAlign: 'right' }}>
-        <a href={props.status.url}>{U.toLocaleString(props.status.created_at)}</a>
+        <a href={props.status.url}>{U.formatLocaleString(props.status.created_at, 'm/d H:MM:ss.l')}</a>
         {reblog ? (
-          <span> [Original:&nbsp;<a href={reblog.url}>{U.toLocaleString(reblog.created_at)}</a>]</span>
+          <span> [Original:&nbsp;<a href={reblog.url}>{U.formatLocaleString(props.status.created_at, 'yyyy/m/d H:MM')}</a>]</span>
         ) : ''}
       </span>
     </div>
@@ -44,18 +44,33 @@ const AttachedMedia = (props) => (
 
 const StatusBody = (props) => {
   const sts = props.status
+
+  // 新規？ 熟練？
+  const secAfterRegist = (new Date() - new Date(sts.account.created_at)) / 1000
+  const shinki = secAfterRegist < 86400 *  7 // 新規さん
+  const rougai = secAfterRegist > 86400 * 90 // 熟練ユーザー
+
   return (
-    <div className='md-grid md-grid--no-spacing'>
+    <div className={'md-grid md-grid--no-spacing' 
+          + (shinki ? ' shinki' : '')
+          + (rougai ? ' rougai' : '')
+        }>
+      {/* アイコン */}
       <span className='md-cell md-cell--1'>
-        <img className='avatar' src={U.resolveAvatarUrl(props.host, sts.account.avatar)}
+        <img className='avatar'
+          src={U.resolveAvatarUrl(props.host, sts.account.avatar)}
           role='presentation' />
       </span>
+      {/* 名前 */}
       <span className='md-cell md-cell--11 md-cell--7-tablet md-cell--3-phone'>
-        <span className='md-text'>
+        <span className='md-text--secondary account_id'>
+          [{sts.account.id}]
+        </span> <span className='md-text--secondary account_registed'>
+          [{U.toRelactiveString(sts.account.created_at)} 
+          ({U.formatLocaleString(sts.account.created_at, 'yyyy/m/d H:MM')})]
+        </span> <span className='md-text account_display_name'>
           {sts.account.display_name}
-        </span>
-        <span> </span>
-        <span className='md-text--secondary'>
+        </span> <span className='md-text--secondary account_acct'>
           @{sts.account.acct}
         </span>
         {sts.spoiler_text ? (
@@ -68,8 +83,13 @@ const StatusBody = (props) => {
           <AttachedMedia mediaAttachments={sts.media_attachments} /> : ''}
       </span>
       <style jsx>{`
-          .avatar { width: 48px; height: 48px; border-radius: 4px; }
-        `}</style>
+        .avatar { width: 48px; height: 48px; border-radius: 4px; }
+        .account_id { display: none; }
+        .shinki .avatar { border: solid 3px green; }
+        .rougai .avatar { border: solid 3px orange; }
+        .shinki .account_registed { background: #cfc; }
+        .rougai .account_registed { background: #fec; }
+      `}</style>
     </div>
   )
 }
