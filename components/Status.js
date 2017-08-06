@@ -31,9 +31,9 @@ const AttachedMedia = (props) => (
       <span key={att.id}>
         <a href={att.url}>
           {att.type === 'image' || att.type === 'gifv'
-            ? (<img src={att.url} style={{ maxWidth: '100%', height: 'auto' }} />)
+            ? (<img src={att.preview_url} style={{ maxWidth: '100%', maxHeight: '110px' }} />)
             : att.type === 'video' ?
-              (<video src={att.url} />)
+              (<video src={att.url} style={{ maxWidth: '100%', maxHeight: '110px' }} />)
               : ''
           }
         </a>
