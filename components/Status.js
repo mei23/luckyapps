@@ -68,7 +68,7 @@ const StatusBody = (props) => {
           <AttachedMedia mediaAttachments={sts.media_attachments} /> : ''}
       </span>
       <style jsx>{`
-          .avatar { width: 48px; height: 48px; }
+          .avatar { width: 48px; height: 48px; border-radius: 4px; }
         `}</style>
     </div>
   )
@@ -113,7 +113,9 @@ export default class Status extends React.Component {
 
     return (
       <Paper zDepth={2} style={{
-        marginBottom: '20px',
+        margin: '0.3em 1em',
+        padding: '0.1em 0.5em',
+        borderRadius: '0.3em',
         backgroundColor: this.props.isMuteTarget ? 'red' : 'white',
       }}>
         <StatusHeader status={this.state.status} />
