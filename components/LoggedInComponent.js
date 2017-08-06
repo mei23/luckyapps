@@ -1,8 +1,16 @@
 import React from 'react'
 
-class LoggedInComponent extends React.Component {
+import AccountSmall from '../components/AccountSmall'
+
+export default class extends React.Component {
   constructor(props) {
     super()
+
+    this.state = {
+      isLoggedIn: props.isLoggedIn,
+      mastodonAuthInfo: props.mastodonAuthInfo,
+      selfAccount: null,
+    }
   }
 
   static ensureLoggedIn(ctx) {
@@ -21,11 +29,17 @@ class LoggedInComponent extends React.Component {
     return { isLoggedIn: true, mastodonAuthInfo }
   }
 
-  defaultState(props) {
-    return {
-      isLoggedIn: props.isLoggedIn,
-      mastodonAuthInfo: props.mastodonAuthInfo,
-    }
+  getSelfAccountSmall(host) {
+    this.M = new Mastodon(
+      this.state.mastodonAuthInfo.accessToken,
+      this.state.mastodonAuthInfo.host)
+
+    this.M.get('/api/v1/accounts/verify_credentials')
+      .then(act => (
+        <AccountSmall
+          account={act}
+          host={this.state.mastodonAuthInfo.host} />
+      ))
   }
 
   render = (props) => {
@@ -38,5 +52,3 @@ class LoggedInComponent extends React.Component {
     throw new Error('Do not call abstract method from child.')
   }
 }
-
-export default LoggedInComponent

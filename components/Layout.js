@@ -21,17 +21,29 @@ const layoutStyle = {
   border: '1px solid #DDD',
 }
 
-const Layout = (props) => (
+const AppTitle = (props) => (
+  <span>
+    {props.title ? (
+      <span>
+        <a href='/'>LuckyApps</a> / {props.title}
+      </span>
+    ) : 'LuckyApps'}
+  </span>
+)
+
+export default (props) => (
   <div style={layoutStyle}>
     <Header children={props.children} />
 
     <Head>
       <title>
-        {props.title ? props.title + ' | LuckyApps' : 'LuckyApps'}
+        {props.title ? `${props.title} | LuckyApps` : 'LuckyApps'}
       </title>
     </Head>
 
-    <h1>{props.title}</h1>
+    <h1>
+      <AppTitle title={props.title} />
+    </h1>
 
     {props.disableLoggedInParts ? (<span></span>) : (
       <a href='/logout'>
@@ -42,5 +54,3 @@ const Layout = (props) => (
     {props.children}
   </div>
 )
-
-export default Layout
