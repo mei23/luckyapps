@@ -62,6 +62,7 @@ const StatusBody = (props) => {
             src={U.resolveAvatarUrl(props.host, sts.account.avatar)}
             role='presentation' />
         </a>
+        <div className='md-text'>{sts.account.statuses_count} st</div>
       </span>
       {/* 名前 */}
       <span className='md-cell md-cell--11 md-cell--7-tablet md-cell--3-phone'>
