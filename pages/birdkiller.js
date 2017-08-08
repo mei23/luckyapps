@@ -91,6 +91,7 @@ export default class extends LoggedInComponent {
     return (
       <Layout title='BirdKiller'>
         <Head>
+          <base target="_blank" />
           {/* load Onsen script */}
           <script src="/static/mastodon-api.min.js"></script>
         </Head>

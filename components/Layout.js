@@ -25,7 +25,7 @@ const AppTitle = (props) => (
   <span>
     {props.title ? (
       <span>
-        <a href='/'>LuckyApps</a> / {props.title}
+        <a href='/' target='_self'>LuckyApps</a> / {props.title}
       </span>
     ) : 'LuckyApps'}
   </span>
@@ -46,7 +46,7 @@ export default (props) => (
     </h1>
 
     {props.disableLoggedInParts ? (<span></span>) : (
-      <a href='/logout'>
+      <a href='/logout' target='_self'>
         <Button raised secondary label='ログアウト' />
       </a>
     )}
