@@ -57,9 +57,11 @@ const StatusBody = (props) => {
         }>
       {/* アイコン */}
       <span className='md-cell md-cell--1'>
-        <img className='avatar'
-          src={U.resolveAvatarUrl(props.host, sts.account.avatar)}
-          role='presentation' />
+        <a href={sts.account.url}>
+          <img className='avatar'
+            src={U.resolveAvatarUrl(props.host, sts.account.avatar)}
+            role='presentation' />
+        </a>
       </span>
       {/* 名前 */}
       <span className='md-cell md-cell--11 md-cell--7-tablet md-cell--3-phone'>
