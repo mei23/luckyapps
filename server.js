@@ -26,6 +26,11 @@ if (!dev && !process.env.SESSION_SECRET)
 app.prepare().then(() => {
   const server = express()
 
+  server.use(function(req, res, next) {
+    res.header('X-XSS-Protection', '1; mode=block');
+    next();
+  })
+  
   server.use(session({
     secret: dev ? 'session_secret_local' : process.env.SESSION_SECRET,
     saveUninitialized: true,
