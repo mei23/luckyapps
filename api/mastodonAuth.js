@@ -1,4 +1,4 @@
-const Masto = require('mastodon-api')
+const Mastodon = require('mstdn-api').default
 const config = require('../config')
 const fs = require('fs')
 
@@ -22,30 +22,32 @@ const auth = (hostname) => {
       }
       return mastodonApps[0]
     }).then((mastodonApp) => {
-      return Masto.getAuthorizationUrl(
-        mastodonApp.client_id,
-        mastodonApp.client_secret,
-        'https://' + hostname,
-        SCOPES,
-        REDIRECT_URL
+      return Mastodon.generateAuthUrl(
+        mastodonApp.client_id, {
+          redirect_uri: REDIRECT_URL,
+          scopes: Mastodon.Scope.DEFAULT,
+        },
+        hostname
       )
     })
 }
 
 const createApp = (hostname) => {
   // OAuth create app API を呼ぶ
-  return Masto.createOAuthApp(
-    'https://' + hostname + '/api/v1/apps',
-    APP_NAME,
-    SCOPES,
-    REDIRECT_URL
-  ).then(oauthRes => {
-    // 返ってきた OAuth result を DB に保存
+  return Mastodon.registerApp(
+    APP_NAME, {
+      redirect_uris: REDIRECT_URL,
+      scopes: Mastodon.Scope.DEFAULT,
+      website: config.URL,
+    },
+    hostname
+  ).then(appData => {
+    // 返ってきた appData を DB に保存
     return new MastodonApp({
       hostname: hostname,
-      id: oauthRes.id,
-      client_id: oauthRes.client_id,
-      client_secret: oauthRes.client_secret,
+      id: appData.id,
+      client_id: appData.clientId,
+      client_secret: appData.clientSecret,
     })
   }).then((mastodonApp) => mastodonApp.save())
     .then((err, mastodonApp) => {
@@ -56,8 +58,6 @@ const createApp = (hostname) => {
 }
 
 const getAccessToken = (hostname, authCode) => {
-  const baseUrl = 'https://' + hostname
-
   return findMastodonApp(hostname)
     .then((mastodonApps) => {
       if (mastodonApps.length < 1) {
@@ -65,14 +65,14 @@ const getAccessToken = (hostname, authCode) => {
       }
       return mastodonApps[0]
     }).then((mastodonApp) => {
-      return Masto.getAccessToken(
+      return Mastodon.fetchAccessToken(
         mastodonApp.client_id,
         mastodonApp.client_secret,
         authCode,
-        baseUrl,
-        REDIRECT_URL
+        REDIRECT_URL,
+        hostname,
       )
-    })
+    }).then(tokenData => tokenData.accessToken)
 }
 
 module.exports = { auth, getAccessToken }

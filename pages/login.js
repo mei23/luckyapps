@@ -5,7 +5,7 @@ import FontIcon from 'react-md/lib/FontIcons'
 import Layout from '../components/Layout'
 
 export default (props) => (
-  <Layout title='BirdKiller' disableLoggedInParts>
+  <Layout title='Login' disableLoggedInParts>
     <div>
       <h2>Mastodon ログイン</h2>
       ログイン先の Mastodon ホスト名を入力してください。
