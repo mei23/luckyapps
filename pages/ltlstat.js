@@ -64,10 +64,12 @@ export default class extends LoggedInComponent {
         // インスタンスの最終 status.id 更新
         this.setState({ lastIState: status.id })
 
-        st.pushStatus(status)
+        const isNewPeriod = st.pushStatus(status)
         this.setState({c1: st.count})
-        this.setState({velo: st.tootPerMin})
-        this.setState({activeUsers: st.activeUsers})
+        if (isNewPeriod) {
+          this.setState({velo: st.tootPerMin})
+          this.setState({activeUsers: st.activeUsers})
+        }
 
         // 表示しない でない限りトゥート一覧更新
         if (!this.state.noDisp) {
