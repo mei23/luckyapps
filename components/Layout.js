@@ -16,9 +16,12 @@ const Header = (props) => {
 }
 
 const layoutStyle = {
-  margin: 5,
-  padding: 5,
+  margin: '0.5em',
+  padding: '0.5em',
   border: '1px solid #DDD',
+  maxWidth: '640px',
+  marginRight: 'auto',
+  marginLeft: 'auto',
 }
 
 const Layout = (props) => (
@@ -34,7 +37,7 @@ const Layout = (props) => (
     <h1>{props.title}</h1>
 
     {props.disableLoggedInParts ? (<span></span>) : (
-      <a href='/logout'>
+      <a href='/logout' target='_self'>
         <Button raised secondary label='ログアウト' />
       </a>
     )}

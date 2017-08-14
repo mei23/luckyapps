@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Head from 'next/head'
 
 import List from 'react-md/lib/Lists/List'
 import Subheader from 'react-md/lib/Subheaders'
@@ -60,13 +61,7 @@ export default class extends LoggedInComponent {
             hidden: this.state.pendDisp,  // 非表示フラグ
             event: 'update',
           }
-
-          let newToots = [toot].concat(this.state.toots).slice(0, 100)
-
-          // 表示保留が無効なら、非表示フラグ全リセット（本当は切り替えイベントでやるべき？）
-          if (!this.state.pendDisp)
-            newToots.forEach(x => { x.hidden = false })
-
+          const newToots = [toot].concat(this.state.toots).slice(0, 100)
           this.setState({ toots: newToots })
         }
 
@@ -74,9 +69,31 @@ export default class extends LoggedInComponent {
       .on('error', err => console.error(err))
   }
 
+  /**
+   * 表示保留スイッチ切り替えイベント
+   */
+  _togglePendDisp = (checked) => {
+    this.setState({ pendDisp: checked })
+    
+    if (checked) {
+      // 保留状態にした時、ダミートゥートpendを入れる
+      const dummyToot = { event: 'pend' } 
+      let newToots = this.state.toots
+      newToots.unshift(dummyToot)
+      this.setState({ toots: newToots })
+    }
+    else {
+      // 保留解除したら、保留フラグ全リセット
+      this.state.toots.forEach(toot => { toot.hidden = false })
+    }
+  }
+
   renderChild(props) {
     return (
       <Layout title='LTL Stat'>
+        <Head>
+          <base target='_blank' />
+        </Head>
         <List className="md-cell md-cell--12 md-paper md-paper--1">
           <Subheader primaryText="Your Account" />
           {this.state.selfAccount}
@@ -89,22 +106,7 @@ export default class extends LoggedInComponent {
         <div style={{ display: 'flex' }}>
           <Switch id='pendDisp' name='pendDisp' label='表示保留'
             checked={this.state.pendDisp}
-            onChange={checked => {
-              this.setState({ pendDisp: checked })
-              
-              if (checked) {
-                // 保留状態にした時
-                const dummyToot = { event: 'pend' } 
-                let newToots = this.state.toots
-                newToots = [dummyToot].concat(newToots)
-                this.setState({ toots: newToots })
-              }
-              else {
-                // 保留解除した時
-                this.state.toots.forEach(toot => { toot.hidden = false })
-                // TODO: nodeってスレッドセーフなのこれ？
-              }
-            }}
+            onChange={this._togglePendDisp}
           />
 
           <Switch id='noDisp' name='noDisp' label='表示しない'
@@ -116,8 +118,7 @@ export default class extends LoggedInComponent {
         {this.state.toots
           .filter(x => !x.hidden) // 非表示のぞく
           .map(toot => (
-            toot.event == 'pend' ? (<div style={{background:'red'}}>更新保留しました</div>) : 
-
+            toot.event == 'pend' ? (<div style={{background:'red'}}>表示保留しました</div>) : 
           <StatusEx key={toot.status.id}
             host={this.state.mastodonAuthInfo.host}
             status={toot.status}
