@@ -4,24 +4,22 @@ import IconSeparator from 'react-md/lib/Helpers/IconSeparator'
 
 import * as U from '../utils/utils'
 
+/**
+ * トゥートヘッダ部分
+ */
 const StatusHeaderEx = (props) => {
   const reblog = props.status.reblog ? props.status.reblog : null
   return (
-    <div style={{ 
-      'display':'flex', 
-      'justify-content': 'flex-end',
-      'text-align':'right'}}>
-      <div className='md-text--secondary'
-      style={{'margin-right':'auto'}}
-      >
+    <div style={{ display:'flex', justifyContent: 'flex-end', textAlign:'right'}}>
+      <div className='md-text--secondary' style={{'margin-right':'auto'}}>
         {props.status.id}
         {reblog ? (
           <span> [Boosted:&nbsp;{reblog.id}]</span>
         ) : ''}
       </div>
-      <div className='md-text--secondary'
-        style={{ textAlign: 'right',  }}>
-        <a href={props.status.url}>{U.toLocaleString(props.status.created_at)}</a>
+      <div className='md-text--secondary' 
+        style={{ textAlign: 'right' }}>
+        <a href={props.status.url}>{U.formatLocaleString(props.status.created_at, 'm/d H:MM:ss.l')}</a>
         {reblog ? (
           <span> [Original:&nbsp;<a href={reblog.url}>{U.toLocaleString(reblog.created_at)}</a>]</span>
         ) : ''}
@@ -72,16 +70,25 @@ const AvatarBox = (props) => {
         }}>
           {sts.account.statuses_count}
         </div>: '' } 
+        <style jsx>{`
+          :global(.shinki) .avatar { border: solid 3px green; }
+          :global(.rougai) .avatar { border: solid 3px orange; }
+        `}</style>
     </div>
+
   )
 }
 
 const StatusBodyEx = (props) => {
   const sts = props.status
+
   return (
-    <div className=''>
+    <div className={''}>
       <span className=''>
-        <span className='md-text'>
+        <span className='md-text--secondary account_registed'>
+          [{U.toRelactiveString(sts.account.created_at)} 
+          ({U.formatLocaleString(sts.account.created_at, 'yyyy/m/d H:MM')})]
+        </span> <span className='md-text'>
           {sts.account.display_name}
         </span>
         <span> </span>
@@ -97,6 +104,10 @@ const StatusBodyEx = (props) => {
         {sts.media_attachments.length > 0 ?
           <AttachedMediaEx mediaAttachments={sts.media_attachments} /> : ''}
       </span>
+      <style jsx>{`
+        :global(.shinki) .account_registed { background: #cfc; }
+        :global(.rougai) .account_registed { background: #fec; }
+      `}</style>
     </div>
   )
 }
@@ -132,13 +143,21 @@ export default class StatusEx extends React.Component {
   render() {
     const sts = this.state.status.reblog ? this.state.status.reblog : this.state.status
 
+    // 新規？ 熟練？
+    const secAfterRegist = (new Date() - new Date(sts.account.created_at)) / 1000
+    const shinki = secAfterRegist < 86400 *  7 // 新規さん
+    const rougai = secAfterRegist > 86400 * 90 // 熟練ユーザー
+
     return (
       <Paper zDepth={2} style={{
         margin: '0.2em 0.4em',
         borderRadius: '0.2em',
         backgroundColor: this.props.isMuteTarget ? 'red' : 'white',
       }}>
-        <div style={{ display: 'flex' }}>
+        <div 
+          style={{ display: 'flex' }} 
+          className={'' + (shinki ? ' shinki' : '') + (rougai ? ' rougai' : '')
+        }>
           <div style={{ margin:'0.3em'}}>
             <AvatarBox status={sts} size='48' showSts='1' />
           </div>
