@@ -50,6 +50,12 @@ class Index extends LoggedInComponent {
               鳥を燃やすウェブサービスです。
             </li></ul>
           </li>
+          <li>
+            <a href='/ltlstat'>LTL Stat</a>
+            <ul><li>
+              LTL Stat
+            </li></ul>
+          </li>
         </ul>
       </Layout>
     )
