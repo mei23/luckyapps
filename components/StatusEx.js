@@ -49,7 +49,7 @@ const AttachedMediaEx = (props) => (
 // https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#account
 
 const AvatarBox = (props) => {
-  const sts = props.status
+  const acc = props.account
   const size = props.size > 0 ? props.size : 48
   const radius = Math.floor(size/12)
   const showSts = props.showSts
@@ -57,9 +57,9 @@ const AvatarBox = (props) => {
   return (
     <div className='avatar-box' style={{'width':`${size}px`}}>
       <div>
-        <a href={sts.account.url} title={sts.account.display_name} target='_blank'>
+        <a href={acc.url} title={acc.display_name} target='_blank'>
           <img className='avatar'
-            src={U.resolveAvatarUrl(props.host, sts.account.avatar)}
+            src={U.resolveAvatarUrl(props.host, acc.avatar)}
             style={{'width':`${size}px`, 'height':`${size}px`, 'border-radius':`${radius}px`}}
             role='presentation' />
         </a>
@@ -68,7 +68,7 @@ const AvatarBox = (props) => {
         <div style={{'text-align':'right', 
         'padding':'0px', 'margin':'0px',
         }}>
-          {sts.account.statuses_count}
+          {acc.statuses_count}
         </div>: '' } 
         <style jsx>{`
           :global(.shinki) .avatar { border: solid 3px green; }
@@ -78,6 +78,7 @@ const AvatarBox = (props) => {
 
   )
 }
+
 
 const StatusBodyEx = (props) => {
   const sts = props.status
@@ -159,7 +160,7 @@ export default class StatusEx extends React.Component {
           className={'' + (shinki ? ' shinki' : '') + (rougai ? ' rougai' : '')
         }>
           <div style={{ margin:'0.3em'}}>
-            <AvatarBox status={sts} size='48' showSts='1' />
+            <AvatarBox account={sts.account} size='48' showSts='1' />
           </div>
           <div style={{ margin:'0.3em', 'width':'100%'}}>
             <StatusHeaderEx status={this.state.status} />

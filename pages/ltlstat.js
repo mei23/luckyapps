@@ -15,7 +15,11 @@ import StatusEx from '../components/StatusEx'
 import LoggedInComponent from '../components/LoggedInComponent'
 import Credits from '../components/Credits'
 
+import AccountList from '../components/AccountList'
+
 import Mastodon from 'mstdn-api'
+
+const StatusStat = require('../utils/StatusStat.js')
 
 export default class extends LoggedInComponent {
   constructor(props) {
@@ -26,6 +30,10 @@ export default class extends LoggedInComponent {
     this.state.toots = []
 
     this.state.lastIState = -1
+    this.state.c1 = -1
+    this.state.c2 = -1
+    this.state.activeUsers = []
+    this.state.velo = -1
 
     // スイッチの初期状態
     this.state.pendDisp = false
@@ -47,12 +55,19 @@ export default class extends LoggedInComponent {
         this.setState({ selfAccount: actSmall })
       })
 
+    const st = new StatusStat(180 * 1000)
+
     const listener = M.stream('public/local')
       .on('update', status => {
         // status update
 
         // インスタンスの最終 status.id 更新
         this.setState({ lastIState: status.id })
+
+        st.pushStatus(status)
+        this.setState({c1: st.count})
+        this.setState({velo: st.tootPerMin})
+        this.setState({activeUsers: st.activeUsers})
 
         // 表示しない でない限りトゥート一覧更新
         if (!this.state.noDisp) {
@@ -61,7 +76,7 @@ export default class extends LoggedInComponent {
             hidden: this.state.pendDisp,  // 非表示フラグ
             event: 'update',
           }
-          const newToots = [toot].concat(this.state.toots).slice(0, 100)
+          const newToots = [toot].concat(this.state.toots).slice(0, 50)
           this.setState({ toots: newToots })
         }
 
@@ -100,8 +115,9 @@ export default class extends LoggedInComponent {
         </List>
 
         <Credits />
-
-        <span>最終status.id: {this.state.lastIState}</span>
+        <div>toot in 集計区間: {this.state.c1}</div>
+        <div>流速: { Math.floor(this.state.velo*10)/10 } トゥート/分</div>
+        <div>最終status.id: {this.state.lastIState}</div>
         {/* スイッチボックス */}
         <div style={{ display: 'flex' }}>
           <Switch id='pendDisp' name='pendDisp' label='表示保留'
@@ -114,7 +130,7 @@ export default class extends LoggedInComponent {
             onChange={x => this.setState({ noDisp: x })}
           />
         </div>
-
+        <AccountList users={this.state.activeUsers} />
         {this.state.toots
           .filter(x => !x.hidden) // 非表示のぞく
           .map(toot => (
