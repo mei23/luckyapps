@@ -160,7 +160,7 @@ export default class StatusEx extends React.Component {
           className={'' + (shinki ? ' shinki' : '') + (rougai ? ' rougai' : '')
         }>
           <div style={{ margin:'0.3em'}}>
-            <AvatarBox account={sts.account} size='48' showSts='1' />
+            <AvatarBox account={sts.account} host={this.props.host} size='48' showSts='1' />
           </div>
           <div style={{ margin:'0.3em', 'width':'100%'}}>
             <StatusHeaderEx status={this.state.status} />
