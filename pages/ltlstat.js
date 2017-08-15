@@ -139,6 +139,7 @@ export default class extends LoggedInComponent {
             onChange={x => this.setState({ noDisp: x })}
           />
         </div>
+        <div>↓{this.st10.periodCommitCount == 0 ? 'まだ集計中（正確な値は10分待ってね)' : '10分ごとに更新中'}</div>
         <AccountList users={this.st10.activeUsers} />
         {this.state.toots
           .filter(x => !x.hidden) // 非表示のぞく
