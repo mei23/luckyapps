@@ -60,7 +60,7 @@ export default class extends LoggedInComponent {
       })
 
     // 統計オブジェクト 流速集計用
-    const st = new StatusStat(300 * 1000)
+    const st = new StatusStat(5 * 60 * 1000)
 
 
     const listener = M.stream('public/local')

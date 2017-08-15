@@ -24,7 +24,8 @@ module.exports = class StatusStat {
 
     const deltaT = ts - this.lastStart
     
-    if (currentPeriod > lastPeriod) {
+    if (ts - this.lastStart > this.duration) {
+    //if (currentPeriod > lastPeriod) {
       isNewPeriod = true
       this._commitStatus(deltaT)
       this.lastStart = ts
