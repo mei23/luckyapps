@@ -55,7 +55,13 @@ export default class extends LoggedInComponent {
         this.setState({ selfAccount: actSmall })
       })
 
+    // 統計オブジェクト 流速集計用
     const st = new StatusStat(300 * 1000)
+
+    // 統計オブジェクト  アクティブユーザー集計用
+    // 5分以内に出現を集計だと過疎っぷりが際立つので、10分間隔で集計＆更新
+    // でも、最初なかなか人出てこないのも寂しいので、最初の10分は認知順にリアルタイム更新
+    const st10 = new StatusStat(10 * 60 * 1000)
 
     const listener = M.stream('public/local')
       .on('update', status => {
@@ -64,12 +70,14 @@ export default class extends LoggedInComponent {
         // インスタンスの最終 status.id 更新
         this.setState({ lastIState: status.id })
 
-        const isNewPeriod = st.pushStatus(status)
+        const isNewPeriod   = st.pushStatus(status)
+        const isNewPeriod10 = st10.pushStatus(status)
+
         this.setState({c1: st.count})
-        if (isNewPeriod) {
+        //if (isNewPeriod) {
           this.setState({velo: st.tootPerMin})
-          this.setState({activeUsers: st.activeUsers})
-        }
+          this.setState({activeUsers: st10.activeUsers})
+        //}
 
         // 表示しない でない限りトゥート一覧更新
         if (!this.state.noDisp) {
