@@ -23,7 +23,7 @@ export default (props) => {
     <div style={{ display:'flex', flexWrap: 'wrap' }}>
       {users.map(user => (
         <div style={{ margin:'2px' }}>
-          <div style={{ padding:'0px', margin:'0px'}}><AvatarIcon account={user.obj} size='32' /></div>
+          <div style={{ padding:'0px', margin:'0px'}}><AvatarIcon account={user.obj} size='24' /></div>
           <div style={{'text-align':'right', marginTop:'-16px',
             textShadow: '0px 0px 2px #eee', color: '#000'
           }}>{user.cnt}</div>

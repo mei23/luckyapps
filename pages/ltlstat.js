@@ -42,6 +42,8 @@ export default class extends LoggedInComponent {
     // 5分以内に出現を集計だと過疎っぷりが際立つので、10分間隔で集計＆更新
     // でも、最初なかなか人出てこないのも寂しいので、最初の10分は認知順にリアルタイム更新
     this.st10 = new StatusStat(10 * 60 * 1000)
+    this.st5 = new StatusStat(5 * 60 * 1000)
+    this.st15 = new StatusStat(15 * 60 * 1000)
   }
 
   static getInitialProps(ctx) {
@@ -66,13 +68,15 @@ export default class extends LoggedInComponent {
     const listener = M.stream('public/local')
       .on('update', status => {
         // status update
-
+        
         // インスタンスの最終 status.id 更新
         this.setState({ lastIState: status.id })
 
         const isNewPeriod   = st.pushStatus(status)
         const isNewPeriod10 = this.st10.pushStatus(status)
-
+        this.st5.pushStatus(status)
+        this.st15.pushStatus(status)
+        
         this.setState({c1: st.count})
         //if (isNewPeriod) {
           this.setState({velo: st.tootPerMin})
@@ -85,7 +89,7 @@ export default class extends LoggedInComponent {
             hidden: this.state.pendDisp,  // 非表示フラグ
             event: 'update',
           }
-          const newToots = [toot].concat(this.state.toots).slice(0, 50)
+          const newToots = [toot].concat(this.state.toots).slice(0, 30)
           this.setState({ toots: newToots })
         }
 
@@ -125,7 +129,6 @@ export default class extends LoggedInComponent {
 
         <Credits />
         <div>toot in 集計区間: {this.state.c1}</div>
-        <div>流速: { Math.floor(this.state.velo*10)/10 } トゥート/分</div>
         <div>最終status.id: {this.state.lastIState}</div>
         {/* スイッチボックス */}
         <div style={{ display: 'flex' }}>
@@ -139,6 +142,7 @@ export default class extends LoggedInComponent {
             onChange={x => this.setState({ noDisp: x })}
           />
         </div>
+        <div>流速: { Math.floor(this.state.velo*10)/10 } トゥート/分</div>
         <div>↓{this.st10.periodCommitCount == 0 ? 'まだ集計中（正確な値は10分待ってね)' : '10分ごとに更新中'}</div>
         <AccountList users={this.st10.activeUsers} />
         {this.state.toots
