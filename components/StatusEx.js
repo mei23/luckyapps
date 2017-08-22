@@ -10,15 +10,14 @@ import * as U from '../utils/utils'
 const StatusHeaderEx = (props) => {
   const reblog = props.status.reblog ? props.status.reblog : null
   return (
-    <div style={{ display:'flex', justifyContent: 'flex-end', textAlign:'right'}}>
-      <div className='md-text--secondary' style={{'margin-right':'auto'}}>
+    <div style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right' }}>
+      <div className='status-id md-text--secondary' style={{ marginRight: 'auto' }}>
         {props.status.id}
         {reblog ? (
           <span> [Boosted:&nbsp;{reblog.id}]</span>
         ) : ''}
       </div>
-      <div className='md-text--secondary' 
-        style={{ textAlign: 'right' }}>
+      <div className='status-time md-text--secondary' style={{ textAlign: 'right' }}>
         <a href={props.status.url}>{U.formatLocaleString(props.status.created_at, 'm/d H:MM:ss.l')}</a>
         {reblog ? (
           <span> [Original:&nbsp;<a href={reblog.url}>{U.toLocaleString(reblog.created_at)}</a>]</span>
@@ -34,14 +33,18 @@ const AttachedMediaEx = (props) => (
       <span key={att.id}>
         <a href={att.url}>
           {att.type === 'image' || att.type === 'gifv'
-            ? (<img src={att.preview_url} style={{ maxWidth: '100%', maxHeight: '110px' }} />)
+            ? (<img src={att.preview_url} className='att-image' />)
             : att.type === 'video' ?
-              (<video src={att.url} style={{ maxWidth: '100%', maxHeight: '110px' }} />)
+              (<video src={att.url} className='att-video' />)
               : ''
           }
         </a>
       </span>
     ))}
+    <style jsx>{`
+      .att-image { max-width: 100%; max-height: 110px }
+      .att-video { max-width: 100%; max-height: 110px }
+    `}</style>
   </div>
 )
 
@@ -65,12 +68,11 @@ const AvatarBox = (props) => {
         </a>
       </div>
       { showSts ? 
-        <div style={{'text-align':'right', 
-        'padding':'0px', 'margin':'0px',
-        }}>
+        <div className='sts-count'>
           {acc.statuses_count}
-        </div>: '' } 
+        </div> : '' } 
         <style jsx>{`
+          .sts-count { text-align: right; padding: 0px; margin: 0px; }
           :global(.shinki) .avatar { border: solid 3px green; }
           :global(.rougai) .avatar { border: solid 3px orange; }
         `}</style>
@@ -84,27 +86,29 @@ const StatusBodyEx = (props) => {
   const sts = props.status
 
   return (
-    <div className={''}>
-      <span className=''>
-        <span className='md-text--secondary account_registed'>
-          [{U.toRelactiveString(sts.account.created_at)} 
-          ({U.formatLocaleString(sts.account.created_at, 'yyyy/m/d H:MM')})]
-        </span> <span className='md-text'>
-          {sts.account.display_name}
-        </span>
-        <span> </span>
-        <span className='md-text--secondary'>
-          @{sts.account.acct}
-        </span>
+    <div>
+      <div>
+        <div>
+          <span className='md-text'>
+            {sts.account.display_name}
+          </span>
+          <span> </span>
+          <span className='md-text--secondary'>
+            @{sts.account.acct}
+          </span> <span className='account_registed md-text--secondary'>
+            [{U.toRelactiveString(sts.account.created_at)} 
+            ({U.formatLocaleString(sts.account.created_at, 'yyyy/m/d H:MM')})]
+          </span>
+        </div>
         {sts.spoiler_text ? (
-          <span className='md-text--secondary'>[CW: {sts.spoiler_text}]</span>
+          <div className='md-text'>[CW: {sts.spoiler_text}]</div>
         ) : ''}
-        <span className='md-text' dangerouslySetInnerHTML={{
+        <div className='md-text' dangerouslySetInnerHTML={{
           __html: sts.content
         }} />
         {sts.media_attachments.length > 0 ?
           <AttachedMediaEx mediaAttachments={sts.media_attachments} /> : ''}
-      </span>
+      </div>
       <style jsx>{`
         :global(.shinki) .account_registed { background: #cfc; }
         :global(.rougai) .account_registed { background: #fec; }
@@ -117,10 +121,10 @@ const StatusFooterEx = (props) => {
   const sts = props.status
   return (
     <div>
-      <span className='md-text--secondary' style={{margin:'0em 1em'}}>
+      <span className='md-text--secondary' style={{margin:'0em 0.5em'}}>
         🔃 {sts.reblogs_count}
       </span>
-      <span className='md-text--secondary' style={{margin:'0em 1em'}}>
+      <span className='md-text--secondary' style={{margin:'0em 0.5em'}}>
         ★ {sts.favourites_count}
       </span>
       <span className='md-text--secondary' style={{margin:'0em 1em'}}>
@@ -147,28 +151,36 @@ export default class StatusEx extends React.Component {
     // 新規？ 熟練？
     const secAfterRegist = (new Date() - new Date(sts.account.created_at)) / 1000
     const shinki = secAfterRegist < 86400 *  7 // 新規さん
-    const rougai = secAfterRegist > 86400 * 90 // 熟練ユーザー
+    const rougai = false
 
     return (
-      <Paper zDepth={2} style={{
-        margin: '0.2em 0.4em',
-        borderRadius: '0.2em',
-        backgroundColor: this.props.isMuteTarget ? 'red' : 'white',
-      }}>
-        <div 
-          style={{ display: 'flex' }} 
-          className={'' + (shinki ? ' shinki' : '') + (rougai ? ' rougai' : '')
+      <div>
+        <div style={{ display: 'flex' }} 
+          className={'toot' 
+            + (shinki ? ' shinki' : '')
+            + (rougai ? ' rougai' : '')
+            + (this.props.isMuteTarget ? ' muted' : '')
         }>
           <div style={{ margin:'0.3em'}}>
             <AvatarBox account={sts.account} host={this.props.host} size='48' showSts='1' />
           </div>
-          <div style={{ margin:'0.3em', 'width':'100%'}}>
+          <div style={{ margin:'0.3em', width:'100%'}}>
             <StatusHeaderEx status={this.state.status} />
             <StatusBodyEx host={this.props.host} status={sts}/>
             <StatusFooterEx status={sts} />
           </div>
         </div>
-      </Paper>
+        <style jsx>{`
+          .toot {
+            border: solid 1px #ccc;
+            border-top: 0px;
+            border-right: 0px;
+            border-left: 0px;
+            padding: 0.2em;
+            }
+          .toot.muted { background: red }
+        `}</style>
+      </div>
     )
   }
 }
