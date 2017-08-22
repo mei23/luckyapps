@@ -7,6 +7,15 @@ import * as U from '../utils/utils'
 /**
  * トゥートヘッダ部分
  */
+
+ /*
+ <span className='md-text--secondary' style={{margin:'0em 1em'}}>
+        {sts.sensitive ? (<span>Sensitive | </span>) : ''}
+        {sts.visibility}
+        <span> | </span>
+        {sts.application ? (<a href={sts.application.website}>{sts.application.name}</a>) : JSON.stringify(sts.application)}
+      </span>*/
+
 const StatusHeaderEx = (props) => {
   const reblog = props.status.reblog ? props.status.reblog : null
   return (
@@ -16,6 +25,8 @@ const StatusHeaderEx = (props) => {
         {reblog ? (
           <span> [Boosted:&nbsp;{reblog.id}]</span>
         ) : ''}
+        {props.status.sensitive ? (<span>Sensitive | </span>) : ''}
+        <span> {props.status.visibility}</span>
       </div>
       <div className='status-time md-text--secondary' style={{ textAlign: 'right' }}>
         <a href={props.status.url}>{U.formatLocaleString(props.status.created_at, 'm/d H:MM:ss.l')}</a>
@@ -84,7 +95,11 @@ const AvatarBox = (props) => {
 
 const StatusBodyEx = (props) => {
   const sts = props.status
-
+  let c = sts.content
+  c = c.replace(/^<p>/, '')
+  c = c.replace(/<\/p>$/, '')
+  c = c.replace(/<script/i, '&lt;script')
+  
   return (
     <div>
       <div>
@@ -104,7 +119,7 @@ const StatusBodyEx = (props) => {
           <div className='md-text'>[CW: {sts.spoiler_text}]</div>
         ) : ''}
         <div className='md-text' dangerouslySetInnerHTML={{
-          __html: sts.content
+          __html: c
         }} />
         {sts.media_attachments.length > 0 ?
           <AttachedMediaEx mediaAttachments={sts.media_attachments} /> : ''}
@@ -128,9 +143,6 @@ const StatusFooterEx = (props) => {
         ★ {sts.favourites_count}
       </span>
       <span className='md-text--secondary' style={{margin:'0em 1em'}}>
-        {sts.sensitive ? (<span>Sensitive | </span>) : ''}
-        {sts.visibility}
-        <span> | </span>
         {sts.application ? (<a href={sts.application.website}>{sts.application.name}</a>) : JSON.stringify(sts.application)}
       </span>
     </div>
