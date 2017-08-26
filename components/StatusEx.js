@@ -2,6 +2,8 @@ import FontIcon from 'react-md/lib/FontIcons'
 import Paper from 'react-md/lib/Papers'
 import IconSeparator from 'react-md/lib/Helpers/IconSeparator'
 
+import UserIcon from '../components/UserIcon'
+
 import * as U from '../utils/utils'
 
 /**
@@ -62,6 +64,9 @@ const AttachedMediaEx = (props) => (
 // account object
 // https://github.com/tootsuite/documentation/blob/master/Using-the-API/API.md#account
 
+
+
+
 const AvatarBox = (props) => {
   const acc = props.account
   const size = props.size > 0 ? props.size : 48
@@ -70,14 +75,7 @@ const AvatarBox = (props) => {
   
   return (
     <div className='avatar-box' style={{'width':`${size}px`}}>
-      <div>
-        <a href={acc.url} title={acc.display_name} target='_blank'>
-          <img className='avatar'
-            src={U.resolveAvatarUrl(props.host, acc.avatar)}
-            style={{'width':`${size}px`, 'height':`${size}px`, 'border-radius':`${radius}px`}}
-            role='presentation' />
-        </a>
-      </div>
+      <UserIcon host={props.host} account={acc} anim={0} />
       { showSts ? 
         <div className='sts-count'>
           {acc.statuses_count}

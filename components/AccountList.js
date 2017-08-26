@@ -1,23 +1,6 @@
+import UserIcon from '../components/UserIcon'
 
 import * as U from '../utils/utils'
-
-/**
- * User icon with link
- */
-const AvatarIcon = (props) => {
-  const acc = props.account
-  const size = props.size > 0 ? props.size : 48
-  const radius = Math.floor(size/12)
-  
-  return (
-    <a href={acc.url} title={acc.display_name} target='_blank'>
-      <img className='avatar'
-        src={U.resolveAvatarUrl(props.host, acc.avatar)}
-        style={{ width:`${size}px`, height:`${size}px`, borderRadius:`${radius}px` }}
-        role='presentation' />
-    </a>
-  )
-}
 
 /**
  * Active users part
@@ -30,9 +13,7 @@ export default (props) => {
       <div className='user-list' style={{ display: 'flex', flexWrap: 'wrap' }}>
         {users.map(user => (
           <div className='user'>
-            <div className='user-icon'>
-              <AvatarIcon account={user.obj} size='24' />
-            </div>
+            <UserIcon account={user.obj} size='24' anim='-1' />
             <div className='user-toot'>{user.cnt}</div>
           </div>
         ))}
