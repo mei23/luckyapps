@@ -75,7 +75,7 @@ const AvatarBox = (props) => {
   
   return (
     <div className='avatar-box' style={{'width':`${size}px`}}>
-      <UserIcon host={props.host} account={acc} anim={0} />
+      <UserIcon host={props.host} account={acc} anim={0} duration={2000} />
       { showSts ? 
         <div className='sts-count'>
           {acc.statuses_count}

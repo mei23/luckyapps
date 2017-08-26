@@ -6,7 +6,9 @@ import * as U from '../utils/utils'
 // size: in px (optional, default:48)
 
 // anim: アニメーションする？ (optional, default:0)
-// -1:never(絶対にしない), 0:onHover(Hoverのみ), 1:allways(常にする)
+// -1:never(しない), 0:onHover(Hover時のみ), 1:allways(常にする)
+
+// duration: onHover時でも初回時にアニメーションする時間(ms)
 
 export default class UserIcon extends React.Component {
   constructor(props) {
@@ -15,11 +17,23 @@ export default class UserIcon extends React.Component {
     this.mouseOver = this.mouseOver.bind(this)
     this.mouseOut = this.mouseOut.bind(this)
 
+    this.anim = this.props.anim || 0
+    this.duration = this.props.duration || 0
+
     this.state = {
       hover: false
     }
   }
-  mouseOver = () => {
+
+  componentDidMount() {
+    if (this.duration > 0) {
+      this.setState({hover: true})
+      setTimeout(
+        function() { this.setState({hover: false}) }.bind(this),
+        this.duration);
+    }
+  }
+  mouseOver() {
     this.setState({hover: true})
   }
   mouseOut() {
@@ -32,16 +46,14 @@ export default class UserIcon extends React.Component {
     const size = this.props.size > 0 ? this.props.size : 48
     const radius = Math.floor(size/12)
 
-    const anim = this.props.anim || 0
-
     const urlStatic  = U.resolveAvatarUrl(host, acc.avatar_static)
     const urlDynamic = U.resolveAvatarUrl(host, acc.avatar)
-    const urlOut   = 1 <= anim ? urlDynamic : urlStatic
-    const urlHover = 0 <= anim ? urlDynamic : urlStatic
+    const urlOut   = 1 <= this.anim ? urlDynamic : urlStatic
+    const urlHover = 0 <= this.anim ? urlDynamic : urlStatic
 
     return (
       <div
-        onMouseOver={this.mouseOver.bind(this)} onMouseOut={this.mouseOut.bind(this)}
+        onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}
         style={{
           'width': `${size}px`, 'height': `${size}px`, 
           'border-radius': `${radius}px`,
