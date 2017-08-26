@@ -19,7 +19,24 @@ export default (props) => {
         ))}
       </div>
       <style jsx>{`
-        .user { margin: 2px; }
+        .user {
+          margin: 2px;
+          animation-duration: 0.5s;
+          animation-name: alived;
+          animation-timing-function: ease-out;
+        }
+
+        @keyframes alived {
+          0% {
+            transform: scale(1.3);
+            background: #ee9;
+            box-shadow:0px 0px 6px 2px #ee9;
+          }
+          100% {
+            background: none;
+          }
+        }
+
         .user-icon { margin: 0px; padding: 0px; }
         .user-toot {
           text-align: right;

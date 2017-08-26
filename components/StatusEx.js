@@ -75,7 +75,7 @@ const AvatarBox = (props) => {
   
   return (
     <div className='avatar-box' style={{'width':`${size}px`}}>
-      <UserIcon host={props.host} account={acc} anim={0} duration={2000} />
+      <UserIcon host={props.host} account={acc} anim={0} duration={3000} />
       { showSts ? 
         <div className='sts-count'>
           {acc.statuses_count}
@@ -189,6 +189,7 @@ export default class StatusEx extends React.Component {
             padding: 0.2em;
             animation-duration: 10s;
             animation-name: alived;
+            animation-timing-function: linear;
           }
           .toot.muted { background: red }
           @keyframes alived {
