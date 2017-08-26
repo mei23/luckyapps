@@ -52,18 +52,20 @@ export default class UserIcon extends React.Component {
     const urlHover = 0 <= this.anim ? urlDynamic : urlStatic
 
     return (
-      <div
-        onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}
-        style={{
-          'width': `${size}px`, 'height': `${size}px`, 
-          'border-radius': `${radius}px`,
-          'background-image': (this.state.hover
-            ? 'url(' + urlHover + ')'
-            : 'url(' + urlOut + ')'),
-          'background-size': `${size}px`,
-      }}
-      >
-      </div>
+      <a href={acc.url} title={acc.display_name} target='_blank'>
+        <div
+          onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}
+          style={{
+            'width': `${size}px`, 'height': `${size}px`, 
+            'border-radius': `${radius}px`,
+            'background-image': (this.state.hover
+              ? 'url(' + urlHover + ')'
+              : 'url(' + urlOut + ')'),
+            'background-size': `${size}px`,
+        }}
+        >
+        </div>
+      </a>
     )
   }
 }
