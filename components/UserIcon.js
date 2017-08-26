@@ -4,6 +4,7 @@ import * as U from '../utils/utils'
 // account: Account object
 
 // size: in px (optional, default:48)
+// radius_ifactar: 2:正円 - 12:角丸
 
 // anim: アニメーションする？ (optional, default:0)
 // -1:never(しない), 0:onHover(Hover時のみ), 1:allways(常にする)
@@ -19,6 +20,7 @@ export default class UserIcon extends React.Component {
 
     this.anim = this.props.anim || 0
     this.duration = this.props.duration || 0
+    this.radius_ifactar = this.props.radius_ifactar || 12
 
     this.state = {
       hover: false
@@ -44,7 +46,7 @@ export default class UserIcon extends React.Component {
     const acc = this.props.account
     const host = this.props.host
     const size = this.props.size > 0 ? this.props.size : 48
-    const radius = Math.floor(size/12)
+    const radius = Math.floor(size/this.radius_ifactar)
 
     const urlStatic  = U.resolveAvatarUrl(host, acc.avatar_static)
     const urlDynamic = U.resolveAvatarUrl(host, acc.avatar)
