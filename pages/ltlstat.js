@@ -141,8 +141,6 @@ export default class extends LoggedInComponent {
         </List>
 
         <Credits />
-        <div>toot in 集計区間: {this.state.c1}</div>
-        <div>最終status.id: {this.state.lastIState}</div>
         {/* スイッチボックス */}
         <div style={{ display: 'flex' }}>
           <Switch id='pendDisp' name='pendDisp' label='表示保留'
@@ -154,6 +152,10 @@ export default class extends LoggedInComponent {
             checked={this.state.noDisp}
             onChange={x => this.setState({ noDisp: x })}
           />
+        </div>
+        <div>
+          <span>toot in 集計区間: {this.state.c1}</span> / <span>
+            最終status.id: {this.state.lastIState}</span>
         </div>
         <div>流速: { Math.floor(this.state.velo*10)/10 } トゥート/分</div>
         <div>↓{this.st10.periodCommitCount == 0 ? 'まだ集計中（正確な値は10分待ってね)' : '10分ごとに更新中'}</div>
