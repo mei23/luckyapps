@@ -188,20 +188,17 @@ export default class StatusEx extends React.Component {
             border-right: 0px;
             border-left: 0px;
             padding: 0.2em;
-            animation-duration: 10s;
+            animation-duration: 5s;
             animation-name: alived;
             animation-timing-function: linear;
           }
           .toot.muted { background: red }
           @keyframes alived {
             0% {
-              background: #88f;
-            }
-            20% {
-              background: #aaf;
+              background: #ddf;
             }
             100% {
-              background: none;
+              background: #ddf;
             }
           }
         `}</style>

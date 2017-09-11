@@ -89,17 +89,16 @@ export default class extends LoggedInComponent {
             hidden: this.state.pendDisp,  // 非表示フラグ
             event: 'update',
           }
-          const newToots = [toot].concat(this.state.toots).slice(0, 30)
+          const newToots = [toot].concat(this.state.toots).slice(0, 50)
           this.setState({ toots: newToots })
         }
-
       })
       .on('delete', status => {
         const toot = {
           status,
           event: 'delete',
         }
-        const newToots = [toot].concat(this.state.toots).slice(0, 30)
+        const newToots = [toot].concat(this.state.toots).slice(0, 50)
         this.setState({ toots: newToots })
       })
       .on('notification', status => {
@@ -107,7 +106,7 @@ export default class extends LoggedInComponent {
           status,
           event: 'notification',
         }
-        const newToots = [toot].concat(this.state.toots).slice(0, 30)
+        const newToots = [toot].concat(this.state.toots).slice(0, 50)
         this.setState({ toots: newToots })
       })
       .on('error', err => console.error(err))
@@ -164,8 +163,8 @@ export default class extends LoggedInComponent {
         {this.state.toots
           .filter(x => !x.hidden) // 非表示のぞく
           .map(toot => (
-            toot.event == 'pend' ? (<div style={{background:'red'}}>表示保留しました</div>) : 
-            toot.event == 'delete' ? (<div style={{background:'red'}}>{toot.status}</div>) : 
+            toot.event == 'pend' ? (<div style={{background:'yellow'}}>表示保留しました</div>) : 
+            toot.event == 'delete' ? (<div style={{background:'red'}}>delete {toot.status}</div>) : 
             //toot.event == 'notification' ? (<div style={{background:'notification'}}>{JSON.stringify(toot.status)}</div>) : 
           <StatusEx key={toot.status.id}
             host={this.state.mastodonAuthInfo.host}
