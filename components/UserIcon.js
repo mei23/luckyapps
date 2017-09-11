@@ -45,6 +45,7 @@ export default class UserIcon extends React.Component {
   render() {
     const acc = this.props.account
     const host = this.props.host
+    const text = this.props.text
     const size = this.props.size > 0 ? this.props.size : 48
     const radius = Math.floor(size/this.radius_ifactar)
 
@@ -64,8 +65,17 @@ export default class UserIcon extends React.Component {
               ? 'url(' + urlHover + ')'
               : 'url(' + urlOut + ')'),
             'background-size': `${size}px`,
+
+            'display': 'table-cell',
+            'text-align': 'right',
+            'vertical-align': 'bottom',
+            
+            'color': '#000',
+            'text-decoration': 'none',
+            'text-shadow': '0px 0px 2px #fff',
+
         }}
-        >
+        ><span>{text}</span>
         </div>
       </a>
     )

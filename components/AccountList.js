@@ -10,12 +10,18 @@ export default (props) => {
   return (
     <div className='active-users'>
       <div>アクティブユーザー({users.length}人)</div>
-      <div className='user-list' style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <div className='user-list' style={{
+        display: 'flex', flexWrap: 'wrap',
+        'max-height': '150px',
+        overflow: 'scroll',
+        }}>
         {users.map(user => (
           <div className='user'>
-            <UserIcon account={user.obj} size='24' anim='-1' />
-            <div className='user-toot'>{user.cnt}</div>
+            <UserIcon account={user.obj} text={user.cnt}
+              size={user.cnt > 0 ? 36 : 24}
+              anim='-1' />
           </div>
+          
         ))}
       </div>
       <style jsx>{`
@@ -35,14 +41,6 @@ export default (props) => {
           100% {
             background: none;
           }
-        }
-
-        .user-icon { margin: 0px; padding: 0px; }
-        .user-toot {
-          text-align: right;
-          margin-top: -16px;
-          color: #000;
-          textShadow: 0px 0px 2px #eee;
         }
       `}</style>
     </div>)
