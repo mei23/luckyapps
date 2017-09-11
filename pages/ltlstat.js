@@ -94,6 +94,22 @@ export default class extends LoggedInComponent {
         }
 
       })
+      .on('delete', status => {
+        const toot = {
+          status,
+          event: 'delete',
+        }
+        const newToots = [toot].concat(this.state.toots).slice(0, 30)
+        this.setState({ toots: newToots })
+      })
+      .on('notification', status => {
+        const toot = {
+          status,
+          event: 'notification',
+        }
+        const newToots = [toot].concat(this.state.toots).slice(0, 30)
+        this.setState({ toots: newToots })
+      })
       .on('error', err => console.error(err))
   }
 
@@ -149,6 +165,8 @@ export default class extends LoggedInComponent {
           .filter(x => !x.hidden) // 非表示のぞく
           .map(toot => (
             toot.event == 'pend' ? (<div style={{background:'red'}}>表示保留しました</div>) : 
+            toot.event == 'delete' ? (<div style={{background:'red'}}>{toot.status}</div>) : 
+            //toot.event == 'notification' ? (<div style={{background:'notification'}}>{JSON.stringify(toot.status)}</div>) : 
           <StatusEx key={toot.status.id}
             host={this.state.mastodonAuthInfo.host}
             status={toot.status}
