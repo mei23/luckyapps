@@ -23,12 +23,15 @@ const StatusHeaderEx = (props) => {
   return (
     <div style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right' }}>
       <div className='status-id md-text--secondary' style={{ marginRight: 'auto' }}>
-        {props.status.id}
+        <span>{props.status.id}</span>
         {reblog ? (
-          <span> [Boosted:&nbsp;{reblog.id}]</span>
+          <span>[Boosted:&nbsp;{reblog.id}]</span>
         ) : ''}
-        {props.status.sensitive ? (<span>Sensitive | </span>) : ''}
-        <span> {props.status.visibility}</span>
+        {props.status.sensitive ? (<span> / Sensitive</span>) : ''}
+        <span> / {props.status.visibility}</span>
+        <span> / {props.status.application 
+          ? (<a href={props.status.application.website}>{props.status.application.name}</a>) 
+          : JSON.stringify(props.status.application)}</span>
       </div>
       <div className='status-time md-text--secondary' style={{ textAlign: 'right' }}>
         <a href={props.status.url}>{U.formatLocaleString(props.status.created_at, 'm/d H:MM:ss.l')}</a>
@@ -76,11 +79,8 @@ const AvatarBox = (props) => {
   return (
     <div className='avatar-box' style={{'width':`${size}px`}}>
       <UserIcon host={props.host} account={acc}
+        text={showSts? acc.statuses_count : ''}
         size={48} radius_ifactar={12} anim={0} duration={3000} />
-      { showSts ? 
-        <div className='sts-count'>
-          {acc.statuses_count}
-        </div> : '' } 
         <style jsx>{`
           .sts-count { text-align: right; padding: 0px; margin: 0px; }
           :global(.shinki) .avatar { border: solid 3px green; }
@@ -141,9 +141,6 @@ const StatusFooterEx = (props) => {
       <span className='md-text--secondary' style={{margin:'0em 0.5em'}}>
         ★ {sts.favourites_count}
       </span>
-      <span className='md-text--secondary' style={{margin:'0em 1em'}}>
-        {sts.application ? (<a href={sts.application.website}>{sts.application.name}</a>) : JSON.stringify(sts.application)}
-      </span>
     </div>
   )
 }
@@ -178,7 +175,7 @@ export default class StatusEx extends React.Component {
           <div style={{ margin:'0.3em', width:'100%'}}>
             <StatusHeaderEx status={this.state.status} />
             <StatusBodyEx host={this.props.host} status={sts}/>
-            <StatusFooterEx status={sts} />
+            
           </div>
         </div>
         <style jsx>{`
