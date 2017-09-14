@@ -55,7 +55,8 @@ export default class UserIcon extends React.Component {
     const urlHover = 0 <= this.anim ? urlDynamic : urlStatic
 
     return (
-      <a href={acc.url} title={acc.display_name} target='_blank'>
+      <a href={acc.url} title={acc.display_name + (text ? ' ('+text+')' : '')}
+       target='_blank'>
         <div
           onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}
           style={{
@@ -70,9 +71,9 @@ export default class UserIcon extends React.Component {
             'text-align': 'right',
             'vertical-align': 'bottom',
             
-            'color': '#000',
+            'color': '#33f',
             'text-decoration': 'none',
-            'text-shadow': '0px 0px 2px #fff',
+            'text-shadow': '0px 0px 2px #eef',
 
         }}
         ><span>{text}</span>
