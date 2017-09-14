@@ -34,7 +34,7 @@ const StatusHeaderEx = (props) => {
         ) : ''}
         {props.status.sensitive ? (<span> / Sensitive</span>) : ''}
         <span> / {props.status.visibility}</span>
-        <span> delay:{delay}s</span>
+        <span> / delay:{delay}s</span>
         <span> / {props.status.application 
           ? (<a href={props.status.application.website}>{props.status.application.name}</a>) 
           : JSON.stringify(props.status.application)}</span>

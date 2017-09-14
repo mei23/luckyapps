@@ -63,7 +63,7 @@ export default class extends LoggedInComponent {
         this.setState({ selfAccount: actSmall })
       })
 
-    const listener = M.stream('public')
+    const listener = M.stream('public/local')
       .on('update', status => {
         // status update
         
