@@ -16,10 +16,12 @@ import LoggedInComponent from '../components/LoggedInComponent'
 import Credits from '../components/Credits'
 
 import AccountList from '../components/AccountList'
+import FeraList from '../components/FeraList'
 
 import Mastodon from 'mstdn-api'
 
 const StatusStat = require('../utils/StatusStat.js')
+const FeraDelay = require('../utils/FeraDelay.js')
 
 export default class extends LoggedInComponent {
   constructor(props) {
@@ -44,6 +46,7 @@ export default class extends LoggedInComponent {
     this.st10 = new StatusStat(10 * 60 * 1000)
     this.st5 = new StatusStat(5 * 60 * 1000)
     this.st15 = new StatusStat(15 * 60 * 1000)
+    this.fd = new FeraDelay(10)
   }
 
   static getInitialProps(ctx) {
@@ -65,7 +68,7 @@ export default class extends LoggedInComponent {
     const st = new StatusStat(5 * 60 * 1000)
 
 
-    const listener = M.stream('public/local')
+    const listener = M.stream('public')
       .on('update', status => {
         // status update
         
@@ -76,9 +79,12 @@ export default class extends LoggedInComponent {
         const isNewPeriod10 = this.st10.pushStatus(status)
         this.st5.pushStatus(status)
         this.st15.pushStatus(status)
-        
+        this.fd.pushStatus(status)
+
         this.setState({c1: st.count})
         this.setState({velo: st.tootPerMin})
+
+        status._arriveDate = new Date()
 
         // 表示しない でない限りトゥート一覧更新
         if (!this.state.noDisp) {
@@ -96,8 +102,8 @@ export default class extends LoggedInComponent {
           status,
           event: 'delete',
         }
-        //const newToots = [toot].concat(this.state.toots).slice(0, 50)
-        //this.setState({ toots: newToots })
+        const newToots = [toot].concat(this.state.toots).slice(0, 50)
+        this.setState({ toots: newToots })
       })
       .on('notification', status => {
         const toot = {
@@ -153,6 +159,8 @@ export default class extends LoggedInComponent {
             onChange={x => this.setState({ noDisp: x })}
           />
         </div>
+        <FeraList inss={this.fd.Stat} />
+
         <div>
           <span>toot in 集計区間: {this.state.c1}</span> / <span>
             最終status.id: {this.state.lastIState}</span>
@@ -160,6 +168,7 @@ export default class extends LoggedInComponent {
         <div>流速: { Math.floor(this.state.velo*10)/10 } トゥート/分</div>
         <div>↓{this.st10.periodCommitCount == 0 ? 'まだ集計中（正確な値は10分待ってね)' : '10分ごとに更新中'}</div>
         <AccountList users={this.st10.activeUsers} />
+
         {this.state.toots
           .filter(x => !x.hidden) // 非表示のぞく
           .map(toot => (

@@ -20,6 +20,11 @@ import * as U from '../utils/utils'
 
 const StatusHeaderEx = (props) => {
   const reblog = props.status.reblog ? props.status.reblog : null
+
+  const statusTime = new Date(props.status.created_at).getTime()
+  const arriveTime = props.status._arriveDate.getTime()
+  const delay = Math.floor((arriveTime - statusTime)/1000)
+
   return (
     <div style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right' }}>
       <div className='status-id md-text--secondary' style={{ marginRight: 'auto' }}>
@@ -29,6 +34,7 @@ const StatusHeaderEx = (props) => {
         ) : ''}
         {props.status.sensitive ? (<span> / Sensitive</span>) : ''}
         <span> / {props.status.visibility}</span>
+        <span> delay:{delay}s</span>
         <span> / {props.status.application 
           ? (<a href={props.status.application.website}>{props.status.application.name}</a>) 
           : JSON.stringify(props.status.application)}</span>
@@ -39,6 +45,7 @@ const StatusHeaderEx = (props) => {
           <span> [Original:&nbsp;<a href={reblog.url}>{U.toLocaleString(reblog.created_at)}</a>]</span>
         ) : ''}
       </div>
+      
     </div>
   )
 }
