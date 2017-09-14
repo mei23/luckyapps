@@ -45,8 +45,7 @@ export default class extends LoggedInComponent {
     // でも、最初なかなか人出てこないのも寂しいので、最初の10分は認知順にリアルタイム更新
     this.st10 = new StatusStat(10 * 60 * 1000)
     this.st5 = new StatusStat(5 * 60 * 1000)
-    this.st15 = new StatusStat(15 * 60 * 1000)
-    this.fd = new FeraDelay(10)
+    //this.fd = new FeraDelay(10)
   }
 
   static getInitialProps(ctx) {
@@ -64,10 +63,6 @@ export default class extends LoggedInComponent {
         this.setState({ selfAccount: actSmall })
       })
 
-    // 統計オブジェクト 流速集計用
-    const st = new StatusStat(5 * 60 * 1000)
-
-
     const listener = M.stream('public')
       .on('update', status => {
         // status update
@@ -75,14 +70,13 @@ export default class extends LoggedInComponent {
         // インスタンスの最終 status.id 更新
         this.setState({ lastIState: status.id })
 
-        const isNewPeriod   = st.pushStatus(status)
+        const isNewPeriod   = this.st5.pushStatus(status)
         const isNewPeriod10 = this.st10.pushStatus(status)
         this.st5.pushStatus(status)
-        this.st15.pushStatus(status)
-        this.fd.pushStatus(status)
+        //this.fd.pushStatus(status)
 
-        this.setState({c1: st.count})
-        this.setState({velo: st.tootPerMin})
+        this.setState({c1: this.st5.count})
+        this.setState({velo: this.st5.tootPerMin})
 
         status._arriveDate = new Date()
 
@@ -159,7 +153,9 @@ export default class extends LoggedInComponent {
             onChange={x => this.setState({ noDisp: x })}
           />
         </div>
+        {/*
         <FeraList inss={this.fd.Stat} />
+        */}
 
         <div>
           <span>toot in 集計区間: {this.state.c1}</span> / <span>
