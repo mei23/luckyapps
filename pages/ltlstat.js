@@ -65,11 +65,13 @@ export default class extends LoggedInComponent {
     // merge
     let homeUpdateStxs = this.stxsUser
       .filter(x => x.event == 'update')
-      .filter(x => !x.status.reblogged)
+      .sort((a,b) => b.status.id - a.status.id)
+      .filter(x => !x.status.reblogged) // きいてない？
     
     let localUpdateStxs = this.stxsLocal
       .filter(x => x.event == 'update')
-      .filter(x => !x.status.reblogged)
+      .sort((a,b) => b.status.id - a.status.id)
+      .filter(x => !x.status.reblogged) // きいてない？
 
     let mergedStxs = localUpdateStxs.concat(homeUpdateStxs)
 
@@ -83,8 +85,8 @@ export default class extends LoggedInComponent {
         return p.concat(c)
       }, [])
 
-    this.setState({ toots: this.stxsLocal })
-    this.setState({ toots2: this.stxsUser })
+    this.setState({ toots: localUpdateStxs })
+    this.setState({ toots2: homeUpdateStxs })
     this.setState({ toots3: mergedStxs })
   }
 
@@ -218,17 +220,19 @@ export default class extends LoggedInComponent {
         <div>↓{this.st10.periodCommitCount == 0 ? 'まだ集計中（正確な値は10分待ってね)' : '10分ごとに更新中'}</div>
         <AccountList users={this.st10.activeUsers} />
 
-        local
-        <div style={{overflow: 'scroll', 'height': '400px'}}>
-          <StatusList stxs={this.state.toots.slice(0, 10)} />
-        </div>
-        local + (home - boost)
-        <div style={{overflow: 'scroll', 'height': '400px'}}>
-          <StatusList stxs={this.state.toots3.slice(0, 10)} />
-        </div>
-        home
-        <div style={{overflow: 'scroll', 'height': '400px'}}>
-          <StatusList stxs={this.state.toots2.slice(0, 10)} />
+        <div style={{ display: 'flex', flexWrap: 'wrap', }}>
+          <div style={{overflow: 'scroll', 'height': '800px', width: '600px'}}>
+            local
+            <StatusList stxs={this.state.toots.slice(0, 10)} />
+          </div>
+          <div style={{overflow: 'scroll', 'height': '800px', width: '600px'}}>
+            local + home
+            <StatusList stxs={this.state.toots3.slice(0, 10)} />
+          </div>
+          <div style={{overflow: 'scroll', 'height': '800px', width: '600px'}}>
+            home
+            <StatusList stxs={this.state.toots2.slice(0, 10)} />
+          </div>
         </div>
       </Layout>
     )

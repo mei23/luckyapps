@@ -19,7 +19,7 @@ const layoutStyle = {
   margin: '0.5em',
   padding: '0.5em',
   border: '1px solid #DDD',
-  maxWidth: '640px',
+  //maxWidth: '640px',
   marginRight: 'auto',
   marginLeft: 'auto',
 }
