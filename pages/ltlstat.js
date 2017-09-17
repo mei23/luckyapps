@@ -41,6 +41,8 @@ export default class extends LoggedInComponent {
     this.state.pendDisp = false
     this.state.noDisp = false
 
+    this.stxsLocal = []
+
     // 統計オブジェクト  アクティブユーザー集計用
     // 5分以内に出現を集計だと過疎っぷりが際立つので、10分間隔で集計＆更新
     // でも、最初なかなか人出てこないのも寂しいので、最初の10分は認知順にリアルタイム更新
@@ -51,6 +53,10 @@ export default class extends LoggedInComponent {
 
   static getInitialProps(ctx) {
     return LoggedInComponent.ensureLoggedIn(ctx)
+  }
+
+  _updateStx(toot) {
+    this.setState({ toots: this.stxsLocal })
   }
 
   componentDidMount() {
@@ -66,47 +72,38 @@ export default class extends LoggedInComponent {
 
     const listener = M.stream('public/local')
       .on('update', status => {
-        // status update
+        // Status 隠しデータ
+        status._arriveDate = new Date()
         
         // インスタンスの最終 status.id 更新
         this.setState({ lastIState: status.id })
-
+        // 統計push
         const isNewPeriod   = this.st5.pushStatus(status)
         const isNewPeriod10 = this.st10.pushStatus(status)
-        this.st5.pushStatus(status)
         //this.fd.pushStatus(status)
-
         this.setState({c1: this.st5.count})
         this.setState({velo: this.st5.tootPerMin})
-
-        status._arriveDate = new Date()
 
         // 表示しない でない限りトゥート一覧更新
         if (!this.state.noDisp) {
           const toot = {
+            event: 'update',
             status,
             hidden: this.state.pendDisp,  // 非表示フラグ
-            event: 'update',
           }
-          const newToots = [toot].concat(this.state.toots).slice(0, 50)
-          this.setState({ toots: newToots })
+          this.stxsLocal = [toot].concat(this.stxsLocal).slice(0, 50)
+          this._updateStx()
         }
       })
       .on('delete', status => {
-        const toot = {
-          status,
-          event: 'delete',
-        }
-        const newToots = [toot].concat(this.state.toots).slice(0, 50)
-        this.setState({ toots: newToots })
+        const toot = { event: 'delete', status, }
+        this.stxsLocal = [toot].concat(this.stxsLocal).slice(0, 50)
+        this._updateStx()
       })
       .on('notification', status => {
-        const toot = {
-          status,
-          event: 'notification',
-        }
-        //const newToots = [toot].concat(this.state.toots).slice(0, 50)
-        //this.setState({ toots: newToots })
+        const toot = { event: 'notification', status, }
+        this.stxsLocal = [toot].concat(this.stxsLocal).slice(0, 50)
+        this._updateStx()
       })
       .on('error', err => console.error(err))
   }
