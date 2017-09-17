@@ -31,9 +31,9 @@ export default class extends LoggedInComponent {
     this.state = this.defaultState(props)
     this.state.selfAccount = null
 
-    this.state.toots = []
-    this.state.toots2 = []
-    this.state.toots3 = []
+    this.state.showStxsLocal = []
+    this.state.showStxsHome = []
+    this.state.showStxsMerged = []
     
     this.state.lastIState = -1
     this.state.c1 = -1
@@ -85,9 +85,9 @@ export default class extends LoggedInComponent {
         return p.concat(c)
       }, [])
 
-    this.setState({ toots: localUpdateStxs })
-    this.setState({ toots2: homeUpdateStxs })
-    this.setState({ toots3: mergedStxs })
+    this.setState({ showStxsLocal: localUpdateStxs })
+    this.setState({ showStxsHome: homeUpdateStxs })
+    this.setState({ showStxsMerged: mergedStxs })
   }
 
   componentDidMount() {
@@ -175,13 +175,14 @@ export default class extends LoggedInComponent {
     if (checked) {
       // 保留状態にした時、ダミートゥートpendを入れる
       const dummyToot = { event: 'pend' } 
-      let newToots = this.state.toots
+      let newToots = this.stxsLocal
       newToots.unshift(dummyToot)
-      this.setState({ toots: newToots })
+      this._updateStx()
     }
     else {
       // 保留解除したら、保留フラグ全リセット
-      this.state.toots.forEach(toot => { toot.hidden = false })
+      this.stxsLocal.forEach(toot => { toot.hidden = false })
+      this.stxsUser .forEach(toot => { toot.hidden = false })
     }
   }
 
@@ -223,15 +224,15 @@ export default class extends LoggedInComponent {
         <div style={{ display: 'flex', flexWrap: 'wrap', }}>
           <div style={{overflow: 'scroll', 'height': '800px', width: '600px'}}>
             local
-            <StatusList stxs={this.state.toots.slice(0, 10)} />
+            <StatusList stxs={this.state.showStxsLocal.slice(0, 10)} />
           </div>
           <div style={{overflow: 'scroll', 'height': '800px', width: '600px'}}>
             local + home
-            <StatusList stxs={this.state.toots3.slice(0, 10)} />
+            <StatusList stxs={this.state.showStxsMerged.slice(0, 10)} />
           </div>
           <div style={{overflow: 'scroll', 'height': '800px', width: '600px'}}>
             home
-            <StatusList stxs={this.state.toots2.slice(0, 10)} />
+            <StatusList stxs={this.state.showStxsHome.slice(0, 10)} />
           </div>
         </div>
       </Layout>

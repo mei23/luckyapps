@@ -87,7 +87,7 @@ const AvatarBox = (props) => {
     <div className='avatar-box' style={{'width':`${size}px`}}>
       <UserIcon host={props.host} account={acc}
         text={showSts? acc.statuses_count : ''}
-        size={48} radius_ifactar={12} anim={0} duration={3000} />
+        size={48} radius_ifactar={12} anim={0} duration={-1} />
         <style jsx>{`
           .sts-count { text-align: right; padding: 0px; margin: 0px; }
           :global(.shinki) .avatar { border: solid 3px green; }
