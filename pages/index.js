@@ -42,21 +42,14 @@ class Index extends LoggedInComponent {
           <Subheader primaryText="Your Account" />
           {this.state.selfAccount}
         </List>
-
-        <ul>
-          <li>
-            <a href='/birdkiller'>BirdKiller</a>
-            <ul><li>
-              鳥を燃やすウェブサービスです。
-            </li></ul>
-          </li>
-          <li>
-            <a href='/ltlstat'>LTL Stat</a>
-            <ul><li>
-              LTL Stat
-            </li></ul>
-          </li>
-        </ul>
+        <dl>
+          <dt><a href='/birdkiller'>BirdKiller</a></dt>
+          <dd>鳥を燃やすウェブサービスです。</dd>
+          <dt><a href='/ltlstat'>LTL Stat</a></dt>
+          <dd>LTL Stat</dd>
+          <dt><a href='/staticstat'>Static Stat</a></dt>
+          <dd>Static Stat</dd>
+        </dl>
       </Layout>
     )
   }
