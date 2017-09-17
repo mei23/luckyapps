@@ -226,6 +226,7 @@ export default class extends LoggedInComponent {
             local
             <StatusList stxs={this.state.showStxsLocal.slice(0, 10)} />
           </div>
+          {/*
           <div style={{overflow: 'scroll', 'height': '800px', width: '600px'}}>
             local + home
             <StatusList stxs={this.state.showStxsMerged.slice(0, 10)} />
@@ -234,6 +235,7 @@ export default class extends LoggedInComponent {
             home
             <StatusList stxs={this.state.showStxsHome.slice(0, 10)} />
           </div>
+          */}
         </div>
       </Layout>
     )

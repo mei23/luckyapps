@@ -22,7 +22,8 @@ const StatusHeaderEx = (props) => {
   const reblog = props.status.reblog ? props.status.reblog : null
 
   const statusTime = new Date(props.status.created_at).getTime()
-  const arriveTime = props.status._arriveDate.getTime()
+  const arriveTime = props.status._arriveDate 
+    ? props.status._arriveDate.getTime() :new Date().getTime()
   const delay = Math.floor((arriveTime - statusTime)/1000)
 
   return (
