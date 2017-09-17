@@ -17,6 +17,7 @@ import Credits from '../components/Credits'
 
 import AccountList from '../components/AccountList'
 import FeraList from '../components/FeraList'
+import StatusList from '../components/StatusList'
 
 import Mastodon from 'mstdn-api'
 
@@ -156,7 +157,6 @@ export default class extends LoggedInComponent {
         {/*
         <FeraList inss={this.fd.Stat} />
         */}
-
         <div>
           <span>toot in 集計区間: {this.state.c1}</span> / <span>
             最終status.id: {this.state.lastIState}</span>
@@ -165,17 +165,10 @@ export default class extends LoggedInComponent {
         <div>↓{this.st10.periodCommitCount == 0 ? 'まだ集計中（正確な値は10分待ってね)' : '10分ごとに更新中'}</div>
         <AccountList users={this.st10.activeUsers} />
 
-        {this.state.toots
-          .filter(x => !x.hidden) // 非表示のぞく
-          .map(toot => (
-            toot.event == 'pend' ? (<div style={{background:'yellow'}}>表示保留しました</div>) : 
-            toot.event == 'delete' ? (<div style={{background:'red'}}>delete {toot.status}</div>) : 
-            toot.event == 'notification' ? (<div style={{background:'notification'}}>{JSON.stringify(toot.status)}</div>) : 
-          <StatusEx key={toot.status.id}
-            host={this.state.mastodonAuthInfo.host}
-            status={toot.status}
-          />
-        ))}
+        <div style={{overflow: 'scroll', 'height': '400px'}}>
+          <StatusList stxs={this.state.toots} />
+        </div>
+        
       </Layout>
     )
   }
