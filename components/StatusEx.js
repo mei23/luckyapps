@@ -21,32 +21,38 @@ import * as U from '../utils/utils'
 const StatusHeaderEx = (props) => {
   const reblog = props.status.reblog ? props.status.reblog : null
 
+  const origin = props.status.reblog || props.status
+
   const statusTime = new Date(props.status.created_at).getTime()
   const arriveTime = props.status._arriveDate 
     ? props.status._arriveDate.getTime() :new Date().getTime()
   const delay = Math.floor((arriveTime - statusTime)/1000)
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right' }}>
-      <div className='status-id md-text--secondary' style={{ marginRight: 'auto' }}>
-        <span>{props.status.id}</span>
-        {reblog ? (
-          <span>[Boosted:&nbsp;{reblog.id}]</span>
-        ) : ''}
-        {props.status.sensitive ? (<span> / Sensitive</span>) : ''}
-        <span> / {props.status.visibility}</span>
-        <span> / delay:{delay}s</span>
-        <span> / {props.status.application 
-          ? (<a href={props.status.application.website}>{props.status.application.name}</a>) 
-          : JSON.stringify(props.status.application)}</span>
+    <div>
+      {/* Line 1 */} 
+      <div style={{ display: 'flex', justifyContent: 'flex-end', textAlign: 'right' }}>
+        <div className='status-id md-text--secondary' style={{ marginRight: 'auto' }}>
+          <span>{origin.id}</span>
+          {origin.sensitive ? (<span> / Sensitive</span>) : ''}
+          <span> / {origin.visibility}</span>
+          {/*<span> / delay:{delay}s</span>*/}
+          <span> / {origin.application 
+            ? (<a href={origin.application.website}>{origin.application.name}</a>) 
+            : JSON.stringify(origin.application)}</span>
+        </div>
+        <div className='status-time md-text--secondary' style={{ textAlign: 'right' }}>
+          <span><a href={origin.url}>{U.formatLocaleString(origin.created_at, 'm/d H:MM:ss.l')}</a></span>
+        </div>
       </div>
-      <div className='status-time md-text--secondary' style={{ textAlign: 'right' }}>
-        <a href={props.status.url}>{U.formatLocaleString(props.status.created_at, 'm/d H:MM:ss.l')}</a>
-        {reblog ? (
-          <span> [Original:&nbsp;<a href={reblog.url}>{U.toLocaleString(reblog.created_at)}</a>]</span>
-        ) : ''}
-      </div>
-      
+
+      {/* Line 2 */} 
+      {reblog ? (
+        <div className='md-text--secondary'>
+          <span>(Boosted by @{props.status.account.acct}, with id:{props.status.id} at:{U.formatLocaleString(props.status.created_at, 'm/d H:MM:ss.l')}
+          )</span>
+        </div>
+      ) : ''}
     </div>
   )
 }
@@ -162,6 +168,7 @@ export default class StatusEx extends React.Component {
   }
 
   render() {
+    // Status(BTの場合BT先)
     const sts = this.state.status.reblog ? this.state.status.reblog : this.state.status
 
     // 新規？ 熟練？

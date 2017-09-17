@@ -90,7 +90,7 @@ export default class extends LoggedInComponent {
       })
     M.get('/api/v1/timelines/home')
       .then(statuss => {
-        this.setState({t1: statuss})
+        //this.setState({t1: statuss})
         this.stxsUser = statuss.map(status => ({ event: 'update', status, }) )
         this._updateStx()
       })
