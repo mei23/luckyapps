@@ -30,8 +30,11 @@ export default class extends LoggedInComponent {
 
     this.state = this.defaultState(props)
     this.state.selfAccount = null
-    this.state.toots = []
 
+    this.state.toots = []
+    this.state.toots2 = []
+    this.state.toots3 = []
+    
     this.state.lastIState = -1
     this.state.c1 = -1
     this.state.c2 = -1
@@ -41,7 +44,10 @@ export default class extends LoggedInComponent {
     this.state.pendDisp = false
     this.state.noDisp = false
 
+    // 受信済み StatusX list - local
     this.stxsLocal = []
+    // 受信済み StatusX list - home
+    this.stxsUser = []
 
     // 統計オブジェクト  アクティブユーザー集計用
     // 5分以内に出現を集計だと過疎っぷりが際立つので、10分間隔で集計＆更新
@@ -56,7 +62,30 @@ export default class extends LoggedInComponent {
   }
 
   _updateStx(toot) {
+    // merge
+    let homeUpdateStxs = this.stxsUser
+      .filter(x => x.event == 'update')
+      .filter(x => !x.status.reblogged)
+    
+    let localUpdateStxs = this.stxsLocal
+      .filter(x => x.event == 'update')
+      .filter(x => !x.status.reblogged)
+
+    let mergedStxs = localUpdateStxs.concat(homeUpdateStxs)
+
+    const tmp = {}
+    mergedStxs = mergedStxs
+      .sort((a,b) => b.status.id - a.status.id)
+      .reduce((p,c) => {
+        const k = c.status.id
+        if (tmp[k]) return p
+        tmp[k] = true
+        return p.concat(c)
+      }, [])
+
     this.setState({ toots: this.stxsLocal })
+    this.setState({ toots2: this.stxsUser })
+    this.setState({ toots3: mergedStxs })
   }
 
   componentDidMount() {
@@ -84,26 +113,53 @@ export default class extends LoggedInComponent {
         this.setState({c1: this.st5.count})
         this.setState({velo: this.st5.tootPerMin})
 
-        // 表示しない でない限りトゥート一覧更新
-        if (!this.state.noDisp) {
-          const toot = {
-            event: 'update',
-            status,
-            hidden: this.state.pendDisp,  // 非表示フラグ
-          }
-          this.stxsLocal = [toot].concat(this.stxsLocal).slice(0, 50)
-          this._updateStx()
+        const toot = {
+          event: 'update',
+          status,
+          hidden: this.state.pendDisp,  // 非表示フラグ
         }
+        this.stxsLocal = [toot].concat(this.stxsLocal).slice(0, 50)
+        
+        // 表示保留 でない限りトゥート一覧更新
+        if (!this.state.noDisp) { this._updateStx() }
       })
       .on('delete', status => {
         const toot = { event: 'delete', status, }
         this.stxsLocal = [toot].concat(this.stxsLocal).slice(0, 50)
-        this._updateStx()
+        if (!this.state.noDisp) { this._updateStx() }
       })
       .on('notification', status => {
         const toot = { event: 'notification', status, }
         this.stxsLocal = [toot].concat(this.stxsLocal).slice(0, 50)
-        this._updateStx()
+        if (!this.state.noDisp) { this._updateStx() }
+      })
+      .on('error', err => console.error(err))
+
+      // ユーザータイムラインリスナ
+      const userListener = M.stream('user')
+      .on('update', status => {
+        // Status 隠しデータ
+        status._arriveDate = new Date()
+
+        const toot = { 
+          event: 'update',
+          status,
+          hidden: this.state.pendDisp,  // 非表示フラグ
+        }
+        this.stxsUser = [toot].concat(this.stxsUser).slice(0, 50)
+        
+        // 表示保留 でない限りトゥート一覧更新
+        if (!this.state.noDisp) { this._updateStx() }
+      })
+      .on('delete', status => {
+        const toot = { event: 'delete', status, }
+        this.stxsUser = [toot].concat(this.stxsUser).slice(0, 50)
+        if (!this.state.noDisp) { this._updateStx() }
+      })
+      .on('notification', status => {
+        const toot = { event: 'notification', status, }
+        this.stxsUser = [toot].concat(this.stxsUser).slice(0, 50)
+        if (!this.state.noDisp) { this._updateStx() }
       })
       .on('error', err => console.error(err))
   }
@@ -162,10 +218,18 @@ export default class extends LoggedInComponent {
         <div>↓{this.st10.periodCommitCount == 0 ? 'まだ集計中（正確な値は10分待ってね)' : '10分ごとに更新中'}</div>
         <AccountList users={this.st10.activeUsers} />
 
+        local
         <div style={{overflow: 'scroll', 'height': '400px'}}>
-          <StatusList stxs={this.state.toots} />
+          <StatusList stxs={this.state.toots.slice(0, 10)} />
         </div>
-        
+        local + (home - boost)
+        <div style={{overflow: 'scroll', 'height': '400px'}}>
+          <StatusList stxs={this.state.toots3.slice(0, 10)} />
+        </div>
+        home
+        <div style={{overflow: 'scroll', 'height': '400px'}}>
+          <StatusList stxs={this.state.toots2.slice(0, 10)} />
+        </div>
       </Layout>
     )
   }
