@@ -214,28 +214,26 @@ export default class extends LoggedInComponent {
         <FeraList inss={this.fd.Stat} />
         */}
         <div>
-          <span>toot in 集計区間: {this.state.c1}</span> / <span>
-            最終status.id: {this.state.lastIState}</span>
+          <span>LTL toot in 集計区間: {this.state.c1}</span> / <span>
+            LTL最終status.id: {this.state.lastIState}</span>
         </div>
-        <div>流速: { Math.floor(this.state.velo*10)/10 } トゥート/分</div>
+        <div>LTL流速: { Math.floor(this.state.velo*10)/10 } トゥート/分</div>
         <div>↓{this.st10.periodCommitCount == 0 ? 'まだ集計中（正確な値は10分待ってね)' : '10分ごとに更新中'}</div>
         <AccountList users={this.st10.activeUsers} />
 
         <div style={{ display: 'flex', flexWrap: 'wrap', }}>
-          <div style={{overflow: 'scroll', 'height': '800px', width: '600px'}}>
+          <div style={{overflow: 'scroll', 'height': '800px', width: '500px'}}>
             local
             <StatusList stxs={this.state.showStxsLocal.slice(0, 10)} />
           </div>
-          {/*
-          <div style={{overflow: 'scroll', 'height': '800px', width: '600px'}}>
+          <div style={{overflow: 'scroll', 'height': '800px', width: '500px'}}>
             local + home
             <StatusList stxs={this.state.showStxsMerged.slice(0, 10)} />
           </div>
-          <div style={{overflow: 'scroll', 'height': '800px', width: '600px'}}>
+          <div style={{overflow: 'scroll', 'height': '800px', width: '500px'}}>
             home
             <StatusList stxs={this.state.showStxsHome.slice(0, 10)} />
           </div>
-          */}
         </div>
       </Layout>
     )
