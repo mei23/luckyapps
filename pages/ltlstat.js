@@ -8,7 +8,7 @@ import Switch from 'react-md/lib/SelectionControls/Switch'
 import TextField from 'react-md/lib/TextFields'
 import Button from 'react-md/lib/Buttons/Button'
 
-import AccountSmall from '../components/AccountSmall'
+import AccountDetail from '../components/AccountDetail'
 import Layout from '../components/Layout'
 import StatusEx from '../components/StatusEx'
 
@@ -96,8 +96,8 @@ export default class extends LoggedInComponent {
       this.state.mastodonAuthInfo.host)
 
     M.get('/api/v1/accounts/verify_credentials')
-      .then(act => (<AccountSmall account={act} host={this.state.mastodonAuthInfo.host} />))
-      .then(actSmall => {
+    .then(act => (<AccountDetail account={act} host={this.state.mastodonAuthInfo.host} />))
+    .then(actSmall => {
         this.setState({ selfAccount: actSmall })
       })
 
@@ -192,11 +192,13 @@ export default class extends LoggedInComponent {
         <Head>
           <base target='_blank' />
         </Head>
-        <List className="md-cell md-cell--12 md-paper md-paper--1">
-          <Subheader primaryText="Your Account" />
+        <Paper zDepth={1} style={{ margin: '0.3em 0em', padding: '0.5em'}}>
+          <div>ログインアカウント</div>
           {this.state.selfAccount}
-        </List>
-
+          <a href='/logout' target='_self'>
+            <Button raised secondary label='ログアウト' />
+          </a>
+        </Paper>
         <Credits />
         {/* スイッチボックス */}
         <div style={{ display: 'flex' }}>
@@ -224,8 +226,9 @@ export default class extends LoggedInComponent {
         <div style={{ display: 'flex', flexWrap: 'wrap', }}>
           <div style={{overflow: 'scroll', 'height': '800px', width: '500px'}}>
             local
-            <StatusList stxs={this.state.showStxsLocal.slice(0, 10)} />
+            <StatusList stxs={this.state.showStxsLocal.slice(0, 30)} />
           </div>
+          {/*
           <div style={{overflow: 'scroll', 'height': '800px', width: '500px'}}>
             local + home
             <StatusList stxs={this.state.showStxsMerged.slice(0, 10)} />
@@ -234,6 +237,7 @@ export default class extends LoggedInComponent {
             home
             <StatusList stxs={this.state.showStxsHome.slice(0, 10)} />
           </div>
+          */}
         </div>
       </Layout>
     )
