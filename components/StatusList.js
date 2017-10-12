@@ -32,6 +32,7 @@ export default (props) => {
           <StatusEx key={stx.status.id}
             host={host}
             status={stx.status}
+            fujo={stx.fujo}
           />
       ))}
     </div>

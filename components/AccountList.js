@@ -12,13 +12,13 @@ export default (props) => {
       <div>アクティブユーザー({users.length}人)</div>
       <div className='user-list' style={{
         display: 'flex', flexWrap: 'wrap',
-        'max-height': '150px',
+        'max-height': '100px',
         overflow: 'scroll',
         }}>
         {users.map(user => (
           <div className='user'>
             <UserIcon account={user.obj} text={user.cnt}
-              size={user.cnt > 0 ? 36 : 24}
+              size={32}
               anim='-1' />
           </div>
           

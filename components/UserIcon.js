@@ -76,7 +76,7 @@ export default class UserIcon extends React.Component {
             'text-shadow': '0px 0px 2px #eef',
 
         }}
-        ><span>{text}</span>
+        ><span style={{ 'background-color': '#eef'}}>{text}</span>
         </div>
       </a>
     )

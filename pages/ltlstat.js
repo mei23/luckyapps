@@ -23,6 +23,8 @@ import Mastodon from 'mstdn-api'
 
 const StatusStat = require('../utils/StatusStat.js')
 const FeraDelay = require('../utils/FeraDelay.js')
+const FujoMon = require('../utils/FujoMon.js')
+
 
 export default class extends LoggedInComponent {
   constructor(props) {
@@ -55,6 +57,7 @@ export default class extends LoggedInComponent {
     this.st10 = new StatusStat(10 * 60 * 1000)
     this.st5 = new StatusStat(5 * 60 * 1000)
     //this.fd = new FeraDelay(10)
+    this.fj = new FujoMon()
   }
 
   static getInitialProps(ctx) {
@@ -111,6 +114,7 @@ export default class extends LoggedInComponent {
         // 統計push
         const isNewPeriod   = this.st5.pushStatus(status)
         const isNewPeriod10 = this.st10.pushStatus(status)
+        const isFujo = this.fj.pushStatus(status)
         //this.fd.pushStatus(status)
         this.setState({c1: this.st5.count})
         this.setState({velo: this.st5.tootPerMin})
@@ -119,6 +123,7 @@ export default class extends LoggedInComponent {
           event: 'update',
           status,
           hidden: this.state.pendDisp,  // 非表示フラグ
+          fujo: isFujo,
         }
         this.stxsLocal = [toot].concat(this.stxsLocal).slice(0, 50)
         
@@ -224,20 +229,20 @@ export default class extends LoggedInComponent {
         <AccountList users={this.st10.activeUsers} />
 
         <div style={{ display: 'flex', flexWrap: 'wrap', }}>
-          <div style={{overflow: 'scroll', 'height': '800px', width: '500px'}}>
+          <div style={{overflow: 'scroll', 'height': '1000px', width: '500px'}}>
             local
-            <StatusList stxs={this.state.showStxsLocal.slice(0, 30)} />
+            <StatusList stxs={this.state.showStxsLocal.slice(0, 20)} />
           </div>
-          {/*
-          <div style={{overflow: 'scroll', 'height': '800px', width: '500px'}}>
+
+          <div style={{overflow: 'scroll', 'height': '1000px', width: '500px'}}>
             local + home
             <StatusList stxs={this.state.showStxsMerged.slice(0, 10)} />
           </div>
-          <div style={{overflow: 'scroll', 'height': '800px', width: '500px'}}>
+          <div style={{overflow: 'scroll', 'height': '1000px', width: '500px'}}>
             home
             <StatusList stxs={this.state.showStxsHome.slice(0, 10)} />
           </div>
-          */}
+
         </div>
       </Layout>
     )

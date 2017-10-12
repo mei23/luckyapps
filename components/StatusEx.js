@@ -112,7 +112,7 @@ const StatusBodyEx = (props) => {
   c = c.replace(/^<p>/, '')
   c = c.replace(/<\/p>$/, '')
   c = c.replace(/<script/i, '&lt;script')
-  
+
   return (
     <div>
       <div>
@@ -183,14 +183,16 @@ export default class StatusEx extends React.Component {
             + (shinki ? ' shinki' : '')
             + (rougai ? ' rougai' : '')
             + (this.props.isMuteTarget ? ' muted' : '')
+            + (this.props.fujo ? ' fujo' : '')
+            
         }>
           <div style={{ margin:'0.3em'}}>
             <AvatarBox account={sts.account} host={this.props.host} size='48' showSts='1' />
+            {this.props.fujo ? (<div className='fujo'>浮上</div>) : ''}
           </div>
           <div style={{ margin:'0.3em', width:'100%'}}>
             <StatusHeaderEx status={this.state.status} />
             <StatusBodyEx host={this.props.host} status={sts}/>
-            
           </div>
         </div>
         <style jsx>{`
@@ -201,8 +203,13 @@ export default class StatusEx extends React.Component {
             border-left: 0px;
             padding: 0.2em;
             animation-duration: 5s;
-            animation-name: alived;
+            animation-name: alived_;
             animation-timing-function: linear;
+          }
+          .toot.fujo {
+            background: #c77;
+            color: white;
+            text-decoration: blink;
           }
           .toot.muted { background: red }
           @keyframes alived {

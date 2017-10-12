@@ -1,0 +1,353 @@
+[33mcommit b4b7c9ac504d3e91228a44e88e8fa0656ec169c8[m
+Author: mei23 <m@m544.net>
+Date:   Wed Sep 27 20:34:05 2017 +0900
+
+    AccoutDetail
+
+[33mcommit a15cfb2aa28a727306af5579237d79c6c70c6136[m
+Author: mei23 <m@m544.net>
+Date:   Mon Sep 18 09:32:53 2017 +0900
+
+    ちとサイズ調整したり
+
+[33mcommit 7a7b76076f5dcb8df3c34d753d9849a4188a4401[m
+Author: mei23 <m@m544.net>
+Date:   Mon Sep 18 04:31:10 2017 +0900
+
+    ブーストの見え方調整
+
+[33mcommit 17e70dc2aa260d428f7b37e2d3b1c48426e6a98e[m
+Author: mei23 <m@m544.net>
+Date:   Mon Sep 18 03:39:18 2017 +0900
+
+    update mstdn-api
+
+[33mcommit 0b8328aba867cbef233c3a28e14f1458ab8c34e3[m
+Author: mei23 <m@m544.net>
+Date:   Mon Sep 18 03:09:56 2017 +0900
+
+    index
+
+[33mcommit 1e288369cd888a5a26da1f9f7d2bd16d070875a7[m
+Author: mei23 <m@m544.net>
+Date:   Mon Sep 18 02:04:43 2017 +0900
+
+    static timelime
+
+[33mcommit 840d0cd720d158a3437ba85db7797819bf252697[m
+Author: mei23 <m@m544.net>
+Date:   Sun Sep 17 21:01:08 2017 +0900
+
+    アニメしないようにしたり、なまえかえたり
+
+[33mcommit 57506c30b932aa206bed9a06dfc7af8c342eacd1[m
+Author: mei23 <m@m544.net>
+Date:   Sun Sep 17 14:06:24 2017 +0900
+
+    タイムライン並べる
+
+[33mcommit da2c1639bb271da1cffd14b2aeca42bce824ba5c[m
+Author: mei23 <m@m544.net>
+Date:   Sun Sep 17 13:41:31 2017 +0900
+
+    merged timeline
+
+[33mcommit 73035880fc0d9dbcf959e6ae22a1e6d0a368f70e[m
+Author: mei23 <m@m544.net>
+Date:   Sun Sep 17 12:08:36 2017 +0900
+
+    統計倍になってたの
+
+[33mcommit 49c015f481bc46e47e7325acb6a93d6764086eb7[m
+Author: mei23 <m@m544.net>
+Date:   Sun Sep 17 11:53:54 2017 +0900
+
+    Split StatusList
+
+[33mcommit b97b64cf9c06256d70e36f7ffdfd6f46f627816d[m
+Author: mei23 <m@m544.net>
+Date:   Fri Sep 15 04:34:22 2017 +0900
+
+    fix desz
+
+[33mcommit edb13d73b628f5c9d7003827c45a843f56a4534a[m
+Author: mei23 <m@m544.net>
+Date:   Fri Sep 15 04:27:42 2017 +0900
+
+    text in icon label
+
+[33mcommit 0c85b9a3cb59950e04b468527d5c9ad46d20f725[m
+Author: mei23 <m@m544.net>
+Date:   Fri Sep 15 04:27:15 2017 +0900
+
+    clean stat object
+
+[33mcommit 0800e8378c6454774407b97b0094c88e4edcef70[m
+Author: mei23 <m@m544.net>
+Date:   Fri Sep 15 04:11:58 2017 +0900
+
+    delay
+
+[33mcommit 91f7822683d9be2276a7c9a0928f33a69d998900[m
+Author: mei23 <m@m544.net>
+Date:   Tue Sep 12 05:28:51 2017 +0900
+
+    はばせまく
+
+[33mcommit 6be58b1402bbbe9cc1a2064f77a70bb664568d76[m
+Author: mei23 <m@m544.net>
+Date:   Tue Sep 12 04:32:05 2017 +0900
+
+    opt.
+
+[33mcommit d5281011077ff20444de0ded5683526e2703e45f[m
+Author: mei23 <m@m544.net>
+Date:   Tue Sep 12 04:27:32 2017 +0900
+
+    opt. active users
+
+[33mcommit ef63e0c333534e91ec169ca38139b03f7a5ad8c9[m
+Author: mei23 <m@m544.net>
+Date:   Tue Sep 12 03:03:15 2017 +0900
+
+    change animetion fade
+
+[33mcommit e1abea5ee2213bb6fa2771733a3f1fd01d16027f[m
+Author: mei23 <m@m544.net>
+Date:   Mon Sep 11 20:53:36 2017 +0900
+
+    show delete
+
+[33mcommit 7250a92096e590d400b2c1f115ca1eebb0cb3a72[m
+Author: mei23 <m@m544.net>
+Date:   Sat Aug 26 20:42:22 2017 +0900
+
+    icon radis-ifactar
+
+[33mcommit 157eb8ba399e2720da08746a67bc2056ee385d28[m
+Author: mei23 <m@m544.net>
+Date:   Sat Aug 26 15:38:22 2017 +0900
+
+    anime chosei
+
+[33mcommit 40081ff0659407247e35db9d94e873947fba57a2[m
+Author: mei23 <m@m544.net>
+Date:   Sat Aug 26 14:21:58 2017 +0900
+
+    inco link
+
+[33mcommit 217142ea7b9f6732b507eaa78b7b77172f802d41[m
+Author: mei23 <m@m544.net>
+Date:   Sat Aug 26 14:13:31 2017 +0900
+
+    alived color
+
+[33mcommit 63630c9e25a48615e56421b7f6975d675e0b8e66[m
+Author: mei23 <m@m544.net>
+Date:   Sat Aug 26 13:28:18 2017 +0900
+
+    icon anim on mount few sec
+
+[33mcommit aaef222dfe927ac831c590ad681c04ada76f7d37[m
+Author: mei23 <m@m544.net>
+Date:   Sat Aug 26 12:41:18 2017 +0900
+
+    icon animation only hover
+
+[33mcommit 0a2b31ce1011b9210fd7b99902767caddfd87bd1[m
+Author: mei23 <m@m544.net>
+Date:   Wed Aug 23 08:15:05 2017 +0900
+
+    Status design 2
+
+[33mcommit df15c755908129f74c8b90f39021200d9180c7ec[m
+Author: mei23 <m@m544.net>
+Date:   Wed Aug 23 06:35:57 2017 +0900
+
+    Status design
+
+[33mcommit 4750048301e2fa468057a3844eacf1db1398175b[m
+Author: mei23 <m@m544.net>
+Date:   Tue Aug 22 06:24:15 2017 +0900
+
+    AccountList style
+
+[33mcommit 06303db03a6568853a8f53318f57d252bf0b33bb[m
+Author: mei23 <m@m544.net>
+Date:   Tue Aug 22 05:16:21 2017 +0900
+
+    Design
+
+[33mcommit b0fd11bc18f09a0b32993029e42599ea6e88ffd0[m
+Author: mei23 <m@m544.net>
+Date:   Tue Aug 15 21:40:44 2017 +0900
+
+    アクティブユーザー集計途上がわかるように
+
+[33mcommit 111b8587792ca842efbac0ead0ae2787f2a949fa[m
+Author: mei23 <m@m544.net>
+Date:   Tue Aug 15 21:18:18 2017 +0900
+
+    集計期間は割り切れる時間じゃなくて、期限基準で満了するようにする
+
+[33mcommit 58dd70fedcdc609b429a6cd9cf888c924e9f9bd6[m
+Author: mei23 <m@m544.net>
+Date:   Tue Aug 15 21:11:24 2017 +0900
+
+    stateはあんまつかわなくていいかも
+
+[33mcommit 238cd96ce7c527f6688c8975b50a38f2e80bc1db[m
+Author: mei23 <m@m544.net>
+Date:   Tue Aug 15 21:00:21 2017 +0900
+
+    アクティブユーザーの集計期間はべつだよ
+
+[33mcommit 0a901b5de73cf309ee0a74d7ec71bf6ba204ce10[m
+Author: mei23 <m@m544.net>
+Date:   Tue Aug 15 20:27:20 2017 +0900
+
+    fix not shown ltl default icon]
+
+[33mcommit d22a995b6538ee2b683f25aef68f8f9191944fd8[m
+Author: mei23 <m@m544.net>
+Date:   Mon Aug 14 20:53:30 2017 +0900
+
+    td300s
+
+[33mcommit cead1dadaff15f997217ecd4fff0591abf11da30[m
+Author: mei23 <m@m544.net>
+Date:   Mon Aug 14 20:22:54 2017 +0900
+
+    babel3
+
+[33mcommit f89454f97e9a27c536d382760d9874acb4b85f78[m
+Author: mei23 <m@m544.net>
+Date:   Mon Aug 14 20:18:37 2017 +0900
+
+    babel-preset
+
+[33mcommit 568609065179452697180ab22b8678799e6608f3[m
+Author: mei23 <m@m544.net>
+Date:   Mon Aug 14 20:11:24 2017 +0900
+
+    babel-loader
+
+[33mcommit ab049fadc1edf4bb353180d00cfd2e36f363bad8[m
+Author: mei23 <m@m544.net>
+Date:   Mon Aug 14 19:51:18 2017 +0900
+
+    my domain
+
+[33mcommit 4701852e022ff9a049c7bdb25eb0a97a34cbd759[m
+Author: mei23 <m@m544.net>
+Date:   Mon Aug 14 19:51:03 2017 +0900
+
+    更新時のみ一覧更新
+
+[33mcommit 405cd305a0c5d9dfd3b3875334004b28affb2891[m
+Author: mei23 <m@m544.net>
+Date:   Mon Aug 14 19:18:49 2017 +0900
+
+    アクティブユーザーと流速
+
+[33mcommit 809120ddfb14e0a867132aff6dfde65d483301a3[m
+Author: mei23 <m@m544.net>
+Date:   Mon Aug 14 15:48:08 2017 +0900
+
+    登録日
+
+[33mcommit 1ca28b42d6807e022fae727157bac96f90208c93[m
+Author: mei23 <m@m544.net>
+Date:   Mon Aug 14 14:23:40 2017 +0900
+
+    ltlstat targetとか
+
+[33mcommit 3dd37c3e882093dc1825d7bc53033b9ea6cffcf3[m
+Author: mei23 <m@m544.net>
+Date:   Mon Aug 14 13:51:03 2017 +0900
+
+    ltlstat更新保留まで
+
+[33mcommit 99934bd99dd355f9982e73ec5e74b890ff933c75[m
+Author: mei23 <m@m544.net>
+Date:   Sun Aug 6 20:43:47 2017 +0900
+
+    margin, padding を調整して、radius 付ける
+
+[33mcommit 425acfc4bb8386d3c440694fd07c5a909c4d37e8[m
+Author: mei23 <m@m544.net>
+Date:   Sun Aug 6 20:39:34 2017 +0900
+
+    fix img src refers original
+
+[33mcommit 942ec461f6d241a95b6bd3c13c6ac6714c26a975[m
+Author: mei23 <m@m544.net>
+Date:   Tue Aug 8 11:54:48 2017 +0900
+
+    add X-XSS-Protection
+
+[33mcommit eb7a8eba34871201bc6c87c9ec01c2cfd676678d[m
+Author: luckybeastakatheboss <luckybeastakatheboss@gmail.com>
+Date:   Wed Aug 9 23:44:56 2017 +0900
+
+    remove dependency to mastodon-api, and add dependency to mstdn-api
+
+[33mcommit a8479675d2ef431d0316db1251e7a700bc54c315[m
+Author: luckybeastakatheboss <luckybeastakatheboss@gmail.com>
+Date:   Sat Aug 5 18:52:21 2017 +0900
+
+    fix README.md
+
+[33mcommit 009c561120aac0e373b1ea684a440ac7030c00ef[m
+Author: luckybeastakatheboss <luckybeastakatheboss@gmail.com>
+Date:   Tue Aug 1 21:18:17 2017 +0900
+
+    ライセンス適用外ファイルについて追記 #19
+
+[33mcommit a50cb85fbc127b6b4c406ae8b69e452b5938c696[m
+Author: luckybeastakatheboss <luckybeastakatheboss@gmail.com>
+Date:   Tue Aug 1 00:39:54 2017 +0900
+
+    たぶんこれで直る #10
+
+[33mcommit 5c2cb3b8cb35d947e77eb8b9affa113a1f4d208c[m
+Author: luckybeastakatheboss <luckybeastakatheboss@gmail.com>
+Date:   Mon Jul 31 07:07:21 2017 +0900
+
+    temporary don't ignore secret file
+
+[33mcommit 256081e2706822c89669bbbaec8f081de5184d45[m
+Author: luckybeastakatheboss <luckybeastakatheboss@gmail.com>
+Date:   Mon Jul 31 06:49:34 2017 +0900
+
+    add muteTargetRegex
+
+[33mcommit 26fbba39cd78250f32af15afb0c3d264610073cf[m
+Author: luckybeastakatheboss <luckybeastakatheboss@gmail.com>
+Date:   Mon Jul 31 05:58:09 2017 +0900
+
+    move class `Credits` to component file
+
+[33mcommit ee61e932f95431c7e8dbb9011dfc7b5563c79167[m
+Author: luckybeastakatheboss <luckybeastakatheboss@gmail.com>
+Date:   Mon Jul 31 05:51:41 2017 +0900
+
+    fix title
+
+[33mcommit fa579b5648158de3bf1035171bd1a312ee9cbaee[m
+Author: luckybeastakatheboss <luckybeastakatheboss@gmail.com>
+Date:   Mon Jul 31 05:49:27 2017 +0900
+
+    fix indent
+
+[33mcommit 2866bc0f25ca118d946af80f6d9b0027406139b5[m
+Author: luckybeastakatheboss <luckybeastakatheboss@gmail.com>
+Date:   Sun Jul 30 20:14:21 2017 +0900
+
+    BirdKiller 作成
+
+[33mcommit 78cd424394fe0a897a6d0f11d2cb235a261873c4[m
+Author: luckybeastakatheboss <30565780+luckybeastakatheboss@users.noreply.github.com>
+Date:   Sun Jul 30 16:10:57 2017 +0900
+
+    Initial commit
