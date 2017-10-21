@@ -70,7 +70,7 @@ const getAccessToken = (hostname, authCode) => {
         mastodonApp.client_secret,
         authCode,
         REDIRECT_URL,
-        hostname,
+        hostname
       )
     }).then(tokenData => tokenData.accessToken)
 }
