@@ -130,16 +130,6 @@ export default class extends LoggedInComponent {
         // 表示保留 でない限りトゥート一覧更新
         if (!this.state.noDisp) { this._updateStx() }
       })
-      .on('delete', status => {
-        const toot = { event: 'delete', status, }
-        this.stxsLocal = [toot].concat(this.stxsLocal).slice(0, 50)
-        if (!this.state.noDisp) { this._updateStx() }
-      })
-      .on('notification', status => {
-        const toot = { event: 'notification', status, }
-        this.stxsLocal = [toot].concat(this.stxsLocal).slice(0, 50)
-        if (!this.state.noDisp) { this._updateStx() }
-      })
       .on('error', err => console.error(err))
 
       // ユーザータイムラインリスナ
@@ -156,16 +146,6 @@ export default class extends LoggedInComponent {
         this.stxsUser = [toot].concat(this.stxsUser).slice(0, 50)
         
         // 表示保留 でない限りトゥート一覧更新
-        if (!this.state.noDisp) { this._updateStx() }
-      })
-      .on('delete', status => {
-        const toot = { event: 'delete', status, }
-        this.stxsUser = [toot].concat(this.stxsUser).slice(0, 50)
-        if (!this.state.noDisp) { this._updateStx() }
-      })
-      .on('notification', status => {
-        const toot = { event: 'notification', status, }
-        this.stxsUser = [toot].concat(this.stxsUser).slice(0, 50)
         if (!this.state.noDisp) { this._updateStx() }
       })
       .on('error', err => console.error(err))
